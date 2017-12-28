@@ -23,6 +23,5 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     #url(r'^$', dashboard_views.home, name='home'),
     url(r'^admin/', admin.site.urls),
-
     url(r'^tuning/', include('tuning.urls')),
 ]
