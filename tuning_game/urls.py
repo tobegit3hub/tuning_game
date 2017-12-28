@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import include
+from django.contrib.auth import views as auth_views
+
+#from dashboard import views as dashboard_views
 
 urlpatterns = [
+    #url(r'^$', dashboard_views.home, name='home'),
     url(r'^admin/', admin.site.urls),
+
+    url(r'^tuning/', include('tuning.urls')),
 ]
