@@ -41,3 +41,24 @@ def v1_trial(request):
 
   response = {"message": "Welcome to tuning game"}
   return JsonResponse(response)
+
+
+@csrf_exempt
+def v1_trial_execute(request, trial_id):
+
+  if request.method == "POST":
+    trial = Trial.objects.get(id=trial_id)
+
+    #from competition.return_input_game import ReturnInputGame
+    #competition = ReturnInputGame()
+    from competition.square_function import SquareFunction
+    competition = SquareFunction()
+    metrics = competition.execute(trial.parameters_instance)
+
+    trial.metrics = metrics
+    trial.save()
+
+    return JsonResponse({"data": trial.to_json()})
+
+  else:
+    return JsonResponse({"error": "Unsupported http method"})

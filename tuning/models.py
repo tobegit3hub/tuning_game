@@ -46,6 +46,9 @@ class Participation(models.Model):
   def __str__(self):
     return "{}_{}".format(self.competition, self.username)
 
+  def to_json(self):
+    return {"id": self.id, "username": self.username, "email": self.email}
+
 
 class Trial(models.Model):
   particiption = models.ForeignKey(Participation, related_name="participation")
@@ -58,3 +61,10 @@ class Trial(models.Model):
 
   def __str__(self):
     return "{}_{}".format(self.particiption, self.parameters_instance)
+
+  def to_json(self):
+    return {
+        "id": self.id,
+        "parameters_instance": self.parameters_instance,
+        "metrics": self.metrics
+    }
