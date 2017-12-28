@@ -1,10 +1,11 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
-"""
-The abstract class for competitions. All competition should implement the method execute(). 
-"""
 
 
 class AbstractCompetition(object):
+  """
+  The abstract class for competitions. All competition should implement the method execute().
+  """
+
   __metaclass__ = ABCMeta
 
   @abstractmethod

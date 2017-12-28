@@ -117,3 +117,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Registry all competitions here
+REGISTERED_COMPETITION = {
+    "ReturnInputGame": "tuning.competition.return_input_game",
+    "SquareFunction": "tuning.competition.square_function",
+}

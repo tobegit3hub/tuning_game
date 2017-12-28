@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
-
+import importlib
 import json
 
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.http import QueryDict
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.db import IntegrityError, transaction
+from django.http import JsonResponse, QueryDict
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
-from tuning.models import Competition
-from tuning.models import Participation
-from tuning.models import Trial
+from tuning.models import Competition, Participation, Trial
 
 
 def index(request):
@@ -49,12 +45,18 @@ def v1_trial_execute(request, trial_id):
   if request.method == "POST":
     trial = Trial.objects.get(id=trial_id)
 
-    #from competition.return_input_game import ReturnInputGame
-    #competition = ReturnInputGame()
-    from competition.square_function import SquareFunction
-    competition = SquareFunction()
-    metrics = competition.execute(trial.parameters_instance)
+    competiton_name_package_map = settings.REGISTERED_COMPETITION
 
+    # module_name = "tuning.competition.square_function"
+    # class_name = "SquareFunction"
+    class_name = trial.particiption.competition.name
+    module_name = competiton_name_package_map.get(class_name)
+
+    module = importlib.import_module(module_name)
+    clazz = getattr(module, class_name)
+    competition = clazz()
+
+    metrics = competition.execute(trial.parameters_instance)
     trial.metrics = metrics
     trial.save()
 
