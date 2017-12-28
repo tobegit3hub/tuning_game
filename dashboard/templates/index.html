@@ -1,0 +1,138 @@
+{% include "header.html" %}
+
+<div class="container">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <span class="glyphicon glyphicon-ok"></span> {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <!-- introduce tabs, refer to http://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp -->
+    <!--<ul class="nav nav-tabs">-->
+    <ul class="nav nav-pills nav-justified">
+        <li class="active"><a data-toggle="tab" href="#competitions">Competitions</a></li>
+        <li><a data-toggle="tab" href="#participations">Participations</a></li>
+        <li><a data-toggle="tab" href="#trials">Trials</a></li>
+    </ul>
+
+    <div class="tab-content text-center">
+
+        <div id="competitions" class="tab-pane fade in active">
+            <h2>Competitions</h2>
+
+            <table class="table table-striped table-hover table-condensed">
+                <th class="text-center active">Id</th>
+                <th class="text-center success">Name</th>
+                <th class="text-center warning">Parameter Description</th>
+                <th class="text-center danger">Goal</th>
+                <th class="text-center info">Computation Budge</th>
+                <th class="text-center active">Created Time</th>
+                <th class="text-center success">Updated Time</th>
+                <!--<th class="text-center warning">Operation</th>-->
+
+                {% for competition in competitions %}
+                <tr>
+                    <td class="text-center active"><a href="/dashboard/v1/studies/{{ study.id }}">{{ competition.id }}</a>
+                    </td>
+                    <td class="text-center success">{{ competition.name }}</td>
+                    <td class="text-center warning">{{ competition.parameters_description }}</td>
+                    <td class="text-center danger">{{ competition.goal }}</td>
+                    <td class="text-center info">{{ competition.computation_budge }}</td>
+                    <td class="text-center active">{{ competition.created_time }}</td>
+                    <td class="text-center success">{{ competition.updated_time }}</td>
+                    <!--
+                    <td class="text-center warning">
+                        <input type="image" width="22px" src="/static/images/delete-icon.png" alt="Delete"
+                               onclick="delete_resource('/dashboard/v1/studies/{{ study.id }}')"/>
+                    </td>
+                    -->
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+
+        <div id="participations" class="tab-pane fade">
+            <h2>Participations</h2>
+
+            <table class="table table-striped table-hover table-condensed">
+                <th class="text-center active">Id</th>
+                <th class="text-center success">Competition Name</th>
+                <th class="text-center warning">Username</th>
+                <th class="text-center danger">Email</th>
+                <th class="text-center info">Current Best Metrics</th>
+                <th class="text-center active">Current Tiral Count</th>
+                <th class="text-center success">Created Time</th>
+                <th class="text-center warning">Updated Time</th>
+                <!--<th class="text-center danger">Operation</th>-->
+
+                {% for participation in participations %}
+                <tr>
+                    <td class="active"><a href="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}">{{ participation.id }}</a></td>
+                    <td class="text-center success">{{ participation.competition.name }}</td>
+                    <td class="text-center warning">{{ participation.username }}</td>
+                    <td class="text-center danger">{{ participation.email }}</td>
+                    <td class="text-center info">{{ participation.current_best_metrics }}</td>
+                    <td class="text-center active">{{ participation.current_tiral_count }}</td>
+                    <td class="text-center success">{{ participation.created_time }}</td>
+                    <td class="text-center warning">{{ participation.updated_time }}</td>
+                    <!--
+                    <td class="text-center danger">
+                        <input type="image" width="22px" src="/static/images/delete-icon.png" alt="Delete"
+                               onclick="delete_resource('/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}')"/>
+                    </td>
+                    -->
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+
+        <div id="trials" class="tab-pane fade">
+            <h2>Trials</h2>
+
+            <table class="table table-striped table-hover table-condensed">
+                <th class="text-center active">Id</th>
+                <th class="text-center success">Competition Name</th>
+                <th class="text-center warning">Particiption Name</th>
+                <th class="text-center danger">Parameters Instance</th>
+                <th class="text-center info">Metrics</th>
+                <th class="text-center active">Status</th>
+                <th class="text-center success">Created Time</th>
+                <th class="text-center warning">Updated Time</th>
+                <!--<th class="text-center danger">Operation</th>-->
+
+                {% for trial in trials %}
+                <tr>
+                    <td class="active"><a href="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}">{{ trial.id }}</a></td>
+                    <td class="text-center success">{{ trial.participation.competition.name }}</td>
+                    <td class="text-center warning">{{ trial.participation.username }}</td>
+                    <td class="text-center danger">{{ trial.parameters_instance }}</td>
+                    <td class="text-center info">{{ trial.metrics }}</td>
+                    <td class="text-center active">{{ trial.status }}</td>
+                    <td class="text-center success">{{ trial.created_time }}</td>
+                    <td class="text-center warning">{{ trial.updated_time }}</td>
+                    <!--
+                    <td class="text-center danger">
+                        <input type="image" width="22px" src="/static/images/delete-icon.png" alt="Delete"
+                               onclick="delete_resource('/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}')"/>
+                    </td>
+                    -->
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% include "footer.html" %}
