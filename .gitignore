@@ -1,3 +1,10 @@
+# IDE files
+.idea/
+
+# Database files
+db.sqlite3
+tuning/migrations/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
