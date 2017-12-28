@@ -25,6 +25,7 @@ class Competition(models.Model):
     instance.name = name
     instance.parameters_description = parameters_description
     instance.status = status
+    instance.save()
     return instance
 
   def to_json(self):
@@ -47,7 +48,22 @@ class Participation(models.Model):
     return "{}_{}".format(self.competition, self.username)
 
   def to_json(self):
-    return {"id": self.id, "username": self.username, "email": self.email}
+    return {
+        "id": self.id,
+        "competition": self.competition.to_json(),
+        "username": self.username,
+        "email": self.email
+    }
+
+  @classmethod
+  def create(cls, competition, username, email, status):
+    instance = cls()
+    instance.competition = competition
+    instance.username = username
+    instance.email = email
+    instance.status = status
+    instance.save()
+    return instance
 
 
 class Trial(models.Model):
@@ -62,9 +78,19 @@ class Trial(models.Model):
   def __str__(self):
     return "{}_{}".format(self.particiption, self.parameters_instance)
 
+  @classmethod
+  def create(cls, particiption, parameters_instance, status):
+    instance = cls()
+    instance.particiption = particiption
+    instance.parameters_instance = parameters_instance
+    instance.status = status
+    instance.save()
+    return instance
+
   def to_json(self):
     return {
         "id": self.id,
+        "particiption": self.particiption.to_json(),
         "parameters_instance": self.parameters_instance,
         "metrics": self.metrics
     }
