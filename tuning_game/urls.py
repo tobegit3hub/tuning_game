@@ -23,4 +23,5 @@ urlpatterns = [
     #url(r'^$', dashboard_views.home, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^tuning/', include('tuning.urls')),
+    url(r'^dashboard/', include('dashboard.urls')),
 ]

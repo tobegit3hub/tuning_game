@@ -19,7 +19,7 @@ def index(request):
 
 
 @csrf_exempt
-def v1_participations(request):
+def v1_competitions(request):
   # TODO: Support GET only
 
   if request.method == "GET":
@@ -31,11 +31,35 @@ def v1_participations(request):
 
 
 @csrf_exempt
-def v1_participation(request, competition_id):
+def v1_competition(request, competition_id):
 
   if request.method == "GET":
     competition = Competition.objects.get(id=competition_id)
     return JsonResponse({"data": competition.to_json()})
+
+  else:
+    return JsonResponse({"error": "Unsupported http method"})
+
+
+@csrf_exempt
+def v1_participations(request):
+
+  if request.method == "GET":
+    participations = Participation.objects.all()
+    response_data = [
+        participation.to_json() for participation in participations
+    ]
+    return JsonResponse({"data": response_data})
+  else:
+    return JsonResponse({"error": "Unsupported http method"})
+
+
+@csrf_exempt
+def v1_participation(request, participation_id):
+
+  if request.method == "GET":
+    participation = Participation.objects.get(id=participation_id)
+    return JsonResponse({"data": participation.to_json()})
 
   else:
     return JsonResponse({"error": "Unsupported http method"})

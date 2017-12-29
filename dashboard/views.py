@@ -2,29 +2,22 @@
 from __future__ import unicode_literals
 
 import json
-import requests
 import platform
 
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.http import Http404
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.conf import settings
+import requests
 from django import forms
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.http import (Http404, HttpResponse, HttpResponseRedirect,
+                         JsonResponse)
+from django.shortcuts import (get_object_or_404, redirect, render,
+                              render_to_response)
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
-from tuning.models import Competition
-from tuning.models import Participation
-from tuning.models import Trial
-
+from tuning.models import Competition, Participation, Trial
 
 
 def home(request):
@@ -38,7 +31,9 @@ def index(request):
     competitions = []
 
   try:
-    participations = [participation for participation in Participation.objects.all()]
+    participations = [
+        participation for participation in Participation.objects.all()
+    ]
   except Participation.DoesNotExist:
     participations = []
 

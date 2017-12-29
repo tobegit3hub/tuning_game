@@ -121,7 +121,10 @@ STATIC_URL = '/static/'
 
 # Registry all competitions here
 REGISTERED_COMPETITION = {
-    "ReturnInputGame": "tuning.competition.return_input_game",
-    "SquareFunction": "tuning.competition.square_function",
-    "OneUnknowQuadraticEquation": "tuning.competition.one_unknow_quadratic_equation",
+    "ReturnInputGame":
+    "tuning.competition.return_input_game",
+    "SquareFunction":
+    "tuning.competition.square_function",
+    "OneUnknowQuadraticEquation":
+    "tuning.competition.one_unknow_quadratic_equation",
 }
