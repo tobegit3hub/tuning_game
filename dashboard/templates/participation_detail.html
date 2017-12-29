@@ -13,7 +13,7 @@
 
     <div id="trial">
         <div align="center">
-            <h2> Trial: {{ trial.name }} </h2>
+            <h2> Participation: {{ participation.username }} </h2>
         </div>
 
         <table class="table table-striped table-hover table-condensed">
@@ -22,106 +22,74 @@
 
             <tr>
                 <td class="text-center active">Id</td>
-                <td class="text-center success">{{ trial.id }}</td>
+                <td class="text-center success">{{ participation.id }}</td>
             </tr>
             <tr>
-                <td class="text-center active">Study Id</td>
-                <td class="text-center success"><a href="/dashboard/v1/studies/{{ trial.study_id }}">{{ trial.study_id }}</a></td>
+                <td class="text-center active">Competition Name</td>
+                <td class="text-center success">{{ participation.competition.name }}</a></td>
             </tr>
             <tr>
-                <td class="text-center active">Name</td>
-                <td class="text-center success">{{ trial.name }}</td>
+                <td class="text-center active">Username</td>
+                <td class="text-center success">{{ participation.username }}</td>
             </tr>
             <tr>
-                <td class="text-center active">Parameter Values</td>
-                <td class="text-center success">{{ trial.parameter_values }}</td>
+                <td class="text-center active">Email</td>
+                <td class="text-center success">{{ participation.email }}</td>
             </tr>
             <tr>
-                <td class="text-center active"> Objective Value</td>
-                <td class="text-center success">{{ trial.objective_value }}</td>
+                <td class="text-center active">Current Best Metrics</td>
+                <td class="text-center success">{{ participation.current_best_metrics }}</td>
+            </tr>
+            <tr>
+                <td class="text-center active">Current Trial Count</td>
+                <td class="text-center success">{{ participation.current_trial_count }}</td>
             </tr>
             <tr>
                 <td class="text-center active">Status</td>
-                <td class="text-center success">{{ trial.status }}</td>
+                <td class="text-center success">{{ participation.status }}</td>
             </tr>
             <tr>
                 <td class="text-center active">Created Time</td>
-                <td class="text-center success">{{ trial.updated_time }}</td>
+                <td class="text-center success">{{ participation.updated_time }}</td>
             </tr>
             <tr>
                 <td class="text-center active">Updated Time</td>
-                <td class="text-center success">{{ trial.updated_time }}</td>
+                <td class="text-center success">{{ participation.updated_time }}</td>
             </tr>
         </table>
-
-        <form action="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}" method="post"
-              onsubmit="return confirm('Do you want to update trial?');">
-            <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"> Objective value </label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="objective_value" value="0.8">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"> Status </label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="status" value="Completed">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div align="center">
-                    <button type="submit" class="btn btn-primary">Update Trial</button>
-                </div>
-            </div>
-        </form>
-
-        <form action="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}/metrics" method="post"
-              onsubmit="return confirm('Do you want to add trial metric?');">
-            <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"> Training step </label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="training_step" value="1">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"> Objective number </label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="objective_value" value="0.9">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div align="center">
-                    <button type="submit" class="btn btn-primary">Add Metric</button>
-                </div>
-            </div>
-        </form>
 
     </div>
 
     <div id="trial_metrics">
         <div align="center">
-            <h2> Trial Metrics</h2>
+            <h2> Trials </h2>
         </div>
 
         <table class="table table-striped table-hover table-condensed">
             <th class="text-center active">Id</th>
-            <th class="text-center success">Training Step</th>
-            <th class="text-center warning">Objective Value</th>
-            <th class="text-center danger">Created Time</th>
-            <th class="text-center info">Updated Time</th>
+            <th class="text-center success">Parameters Instance</th>
+            <th class="text-center warning">Metrics</th>
+            <th class="text-center danger">Status</th>
+            <th class="text-center info">Created Time</th>
+            <th class="text-center active">Updated Time</th>
+            <!--
             <th class="text-center active">Operation</th>
+            -->
 
-            {% for trial_metric in trial_metrics %}
+            {% for trial in trials %}
             <tr>
-                <td class="text-center active">{{ trial_metric.id }}</td>
-                <td class="text-center success">{{ trial_metric.training_step }}</td>
-                <td class="text-center warning">{{ trial_metric.objective_value }}</td>
-                <td class="text-center danger">{{ trial.created_time }}</td>
-                <td class="text-center info">{{ trial.updated_time }}</td>
+                <td class="text-center active">{{ trial.id }}</td>
+                <td class="text-center success">{{ trial.parameters_instance }}</td>
+                <td class="text-center warning">{{ trial.objective_value }}</td>
+                <td class="text-center danger">{{ trial.status }}</td>
+                <td class="text-center info">{{ trial.created_time }}</td>
+                <td class="text-center active">{{ trial.updated_time }}</td>
+                <!--
                 <td class="text-center active">
                     <input type="image" width="22px" src="/static/images/delete-icon.png" alt="Delete"
                            onclick="delete_resource('/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}/metrics/{{ trial_metric.id }}')"/>
                 </td>
+                -->
             </tr>
             {% endfor %}
 

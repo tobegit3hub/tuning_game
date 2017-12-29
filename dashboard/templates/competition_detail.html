@@ -74,7 +74,7 @@
             <th class="text-center success">Username</th>
             <th class="text-center warning">Email</th>
             <th class="text-center danger">Current Best Metrics</th>
-            <th class="text-center info">Current T</th>
+            <th class="text-center info">Current Trial Count</th>
             <th class="text-center active">Status</th>
             <th class="text-center success">Created Time</th>
             <th class="text-center warning">Updated Time</th>
@@ -85,7 +85,7 @@
             {% for participation in participations %}
             <tr>
                 <td class="text-center active"><a
-                        href="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}">{{ participation.id }}</a></td>
+                        href="/dashboard/v1/participations/{{ participation.id }}">{{ participation.id }}</a></td>
                 <td class="text-center success">{{ participation.username }}</td>
                 <td class="text-center warning">{{ participation.email }}</td>
                 <td class="text-center danger">{{ participation.current_best_metrics }}</td>

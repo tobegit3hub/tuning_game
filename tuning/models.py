@@ -37,7 +37,18 @@ class Competition(models.Model):
                               dict["goal"], dict["computation_budge"])
 
   def to_json(self):
-    return {"id": self.id, "name": self.name, "parameters_description": self.parameters_description, "goal": self.goal, "computation_budge": self.computation_budge, "theoretical_best_metrics": self.theoretical_best_metrics, "current_best_metrics": self.current_best_metrics, "status": self.status, "created_time": self.created_time, "updated_time": self.updated_time}
+    return {
+        "id": self.id,
+        "name": self.name,
+        "parameters_description": self.parameters_description,
+        "goal": self.goal,
+        "computation_budge": self.computation_budge,
+        "theoretical_best_metrics": self.theoretical_best_metrics,
+        "current_best_metrics": self.current_best_metrics,
+        "status": self.status,
+        "created_time": self.created_time,
+        "updated_time": self.updated_time
+    }
 
 
 class Participation(models.Model):

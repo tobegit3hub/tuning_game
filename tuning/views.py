@@ -45,7 +45,14 @@ def v1_competition(request, competition_id):
 def v1_participations(request):
 
   if request.method == "GET":
-    participations = Participation.objects.all()
+
+    competition_id = request.GET.get("competition_id", None)
+    if competition_id:
+      competition = Competition.objects.get(id=competition_id)
+      participations = Participation.objects.filter(competition=competition)
+    else:
+      participations = Participation.objects.all()
+
     response_data = [
         participation.to_json() for participation in participations
     ]
@@ -69,7 +76,14 @@ def v1_participation(request, participation_id):
 def v1_trials(request):
 
   if request.method == "GET":
-    trials = Trial.objects.all()
+
+    participation_id = request.GET.get("participation_id", None)
+    if participation_id:
+      participation = Participation.objects.get(id=participation_id)
+      trials = Trial.objects.filter(participation=participation)
+    else:
+      trials = Trial.objects.all()
+
     response_data = [trial.to_json() for trial in trials]
     return JsonResponse({"data": response_data})
 

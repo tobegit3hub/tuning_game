@@ -73,7 +73,7 @@
 
                 {% for participation in participations %}
                 <tr>
-                    <td class="active"><a href="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}">{{ participation.id }}</a></td>
+                    <td class="active"><a href="/dashboard/v1/participations/{{ participation.id }}">{{ participation.id }}</a></td>
                     <td class="text-center success">{{ participation.competition.name }}</td>
                     <td class="text-center warning">{{ participation.username }}</td>
                     <td class="text-center danger">{{ participation.email }}</td>
@@ -110,7 +110,7 @@
 
                 {% for trial in trials %}
                 <tr>
-                    <td class="active"><a href="/dashboard/v1/studies/{{ trial.study_id }}/trials/{{ trial.id }}">{{ trial.id }}</a></td>
+                    <td class="active">{{ trial.id }}</td>
                     <td class="text-center success">{{ trial.participation.competition.name }}</td>
                     <td class="text-center warning">{{ trial.participation.username }}</td>
                     <td class="text-center danger">{{ trial.parameters_instance }}</td>
