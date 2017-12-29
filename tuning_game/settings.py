@@ -123,4 +123,5 @@ STATIC_URL = '/static/'
 REGISTERED_COMPETITION = {
     "ReturnInputGame": "tuning.competition.return_input_game",
     "SquareFunction": "tuning.competition.square_function",
+    "OneUnknowQuadraticEquation": "tuning.competition.one_unknow_quadratic_equation",
 }
