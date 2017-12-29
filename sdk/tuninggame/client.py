@@ -23,7 +23,7 @@ class TuningGameClient(object):
 
     competition = None
     if response.ok:
-      competition = Competition.from_dict(response.json()["data"])
+      competition = Competition.create_from_dict(response.json()["data"])
 
     return competition
 
@@ -66,7 +66,7 @@ class TuningGameClient(object):
 
     participation = None
     if response.ok:
-      participation = Participation.from_dict(response.json()["data"])
+      participation = Participation.create_from_dict(response.json()["data"])
 
     return participation
 
@@ -92,6 +92,12 @@ class TuningGameClient(object):
     if response.ok:
       participation = Participation.create_from_dict(response.json()["data"])
     return participation
+
+  def delete_participation(self, participation_id):
+    url = "{}/tuning/v1/participations/{}".format(self.endpoint,
+                                                  participation_id)
+    response = requests.delete(url)
+    return response
 
   def create_trial(self, particiption_id, parameters_instance):
     url = "{}/tuning/v1/trials".format(self.endpoint)

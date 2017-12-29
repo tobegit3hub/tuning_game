@@ -34,7 +34,11 @@ class Competition(object):
 
   @classmethod
   def create_from_dict(self, dict):
-    return Competition(dict["name"], dict["parameters_description"], dict["goal"], dict["computation_budge"])
+    return Competition(dict["name"], dict["parameters_description"],
+                       dict["goal"], dict["computation_budge"], dict["id"],
+                       dict["theoretical_best_metrics"],
+                       dict["current_best_metrics"], dict["status"],
+                       dict["created_time"], dict["updated_time"])
 
 
 class Participation(object):
@@ -70,7 +74,10 @@ class Participation(object):
 
   @classmethod
   def create_from_dict(self, dict):
-    return Participation(dict["competition"]["id"], dict["username"], dict["email"])
+    return Participation(
+        dict["competition"]["id"], dict["username"], dict["email"], dict["id"],
+        dict["current_best_metrics"], dict["current_trial_count"],
+        dict["status"], dict["created_time"], dict["updated_time"])
 
 
 class Trial(object):
@@ -101,4 +108,6 @@ class Trial(object):
 
   @classmethod
   def create_from_dict(self, dict):
-    return Trial(dict["participation"]["id"], dict["parameters_instance"])
+    return Trial(dict["participation"]["id"], dict["parameters_instance"],
+                 dict["id"], dict["metrics"], dict["status"],
+                 dict["created_time"], dict["updated_time"])
