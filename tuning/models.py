@@ -18,7 +18,7 @@ class Competition(models.Model):
   updated_time = models.DateTimeField(auto_now=True)
 
   def __str__(self):
-    return "{}".format(self.name)
+    return "{}_{}_{}".format(self.name, self.parameters_description, self.goal)
 
   @classmethod
   def create(cls, name, parameters_description, goal, computation_budge):
@@ -64,7 +64,7 @@ class Participation(models.Model):
   updated_time = models.DateTimeField(auto_now=True)
 
   def __str__(self):
-    return "{}_{}".format(self.competition, self.username)
+    return "{}_{}_{}".format(self.competition, self.username, self.email)
 
   @classmethod
   def create(cls, competition, username, email):
@@ -106,7 +106,7 @@ class Trial(models.Model):
   updated_time = models.DateTimeField(auto_now=True)
 
   def __str__(self):
-    return "{}_{}".format(self.participation, self.parameters_instance)
+    return "{}".format(self.parameters_instance)
 
   @classmethod
   def create(cls, particiption, parameters_instance):
@@ -124,7 +124,7 @@ class Trial(models.Model):
   def to_json(self):
     return {
         "id": self.id,
-        "particiption": self.participation.to_json(),
+        "participation": self.participation.to_json(),
         "parameters_instance": self.parameters_instance,
         "metrics": self.metrics,
         "status": self.status,

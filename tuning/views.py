@@ -20,21 +20,53 @@ def index(request):
 
 @csrf_exempt
 def v1_competitions(request):
-  # TODO: Support GET only
 
   if request.method == "GET":
     competitions = Competition.objects.all()
     response_data = [competition.to_json() for competition in competitions]
     return JsonResponse({"data": response_data})
+
+  elif request.method == "POST":
+    data = json.loads(request.body)
+
+    name = data["name"]
+    parameters_description = json.dumps(data["parameters_description"])
+    goal = data["goal"]
+    computation_budge = int(data["computation_budge"])
+
+    competition = Competition.create(name, parameters_description, goal, computation_budge)
+    return JsonResponse({"data": competition.to_json()})
+
   else:
     return JsonResponse({"error": "Unsupported http method"})
 
 
 @csrf_exempt
 def v1_competition(request, competition_id):
+  competition = Competition.objects.get(id=competition_id)
 
   if request.method == "GET":
-    competition = Competition.objects.get(id=competition_id)
+    return JsonResponse({"data": competition.to_json()})
+
+  elif request.method == "DELETE":
+    competition.delete()
+    return JsonResponse({"message": "Succeed to delete object"})
+
+  elif request.method == "PUT":
+    data = json.loads(request.body)
+
+    if "name" in data:
+      competition.name = data["name"]
+    if "parameters_description" in data:
+      competition.status = data["parameters_description"]
+    if "goal" in data:
+      competition.status = data["goal"]
+    if "computation_budge" in data:
+      competition.status = data["computation_budge"]
+    if "theoretical_best_metrics" in data:
+      competition.status = data["theoretical_best_metrics"]
+
+    competition.save()
     return JsonResponse({"data": competition.to_json()})
 
   else:
@@ -57,15 +89,42 @@ def v1_participations(request):
         participation.to_json() for participation in participations
     ]
     return JsonResponse({"data": response_data})
+
+  elif request.method == "POST":
+    data = json.loads(request.body)
+
+    competition_id = data["competition_id"]
+    competition = Competition.objects.get(id=competition_id)
+    username = data["username"]
+    email = data["email"]
+
+    participation = Participation.create(competition, username, email)
+    return JsonResponse({"data": participation.to_json()})
+
   else:
     return JsonResponse({"error": "Unsupported http method"})
 
 
 @csrf_exempt
 def v1_participation(request, participation_id):
+  participation = Participation.objects.get(id=participation_id)
 
   if request.method == "GET":
-    participation = Participation.objects.get(id=participation_id)
+    return JsonResponse({"data": participation.to_json()})
+
+  elif request.method == "DELETE":
+    participation.delete()
+    return JsonResponse({"message": "Succeed to delete object"})
+
+  elif request.method == "PUT":
+    data = json.loads(request.body)
+
+    if "username" in data:
+      participation.username = data["username"]
+    if "email" in data:
+      participation.email = data["email"]
+
+    participation.save()
     return JsonResponse({"data": participation.to_json()})
 
   else:
@@ -93,9 +152,8 @@ def v1_trials(request):
     particiption_id = data["particiption_id"]
     particiption = Participation.objects.get(id=particiption_id)
     parameters_instance = json.dumps(data["parameters_instance"])
-    status = data.get("status", "Initialized")
 
-    trial = Trial.create(particiption, parameters_instance, status)
+    trial = Trial.create(particiption, parameters_instance)
     return JsonResponse({"data": trial.to_json()})
 
   else:
@@ -104,18 +162,16 @@ def v1_trials(request):
 
 @csrf_exempt
 def v1_trial(request, trial_id):
+  trial = Trial.objects.get(id=trial_id)
 
   if request.method == "GET":
-    trial = Trial.objects.get(id=trial_id)
     return JsonResponse({"data": trial.to_json()})
 
   elif request.method == "DELETE":
-    trial = Trial.objects.get(id=trial_id)
     trial.delete()
     return JsonResponse({"message": "Succeed to delete trial"})
 
   elif request.method == "PUT":
-    trial = Trial.objects.get(id=trial_id)
     data = json.loads(request.body)
 
     if "parameters_instance" in data:
