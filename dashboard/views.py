@@ -52,67 +52,55 @@ def index(request):
 
 
 @csrf_exempt
-def v1_studies(request):
-  if request.method == "POST":
-    name = request.POST.get("name", "")
-    study_configuration = request.POST.get("study_configuration", "")
-    algorighm = request.POST.get("algorithm", "RandomSearchAlgorithm")
+def v1_competition(request, competition_id):
+  if request.method == "GET":
+    competition_url = "http://127.0.0.1:{}/tuning/v1/competitions/{}".format(
+            request.META.get("SERVER_PORT"), competition_id)
+    competition_response = requests.get(competition_url)
 
-    # Remove the charactors like \t and \"
-    study_configuration_json = json.loads(study_configuration)
-    data = {
-        "name": name,
-        "study_configuration": study_configuration_json,
-        "algorithm": algorighm
-    }
+    participations_url = "http://127.0.0.1:{}/tuning/v1/participations".format(request.META.get("SERVER_PORT"))
+    participations_response = requests.get(participations_url)
 
-    url = "http://127.0.0.1:{}/suggestion/v1/studies".format(
-        request.META.get("SERVER_PORT"))
-    response = requests.post(url, json=data)
-    messages.info(request, response.content)
-    return redirect("index")
+    if competition_response.ok and participations_response.ok:
+      competition = json.loads(competition_response.content.decode("utf-8"))["data"]
+      participations = json.loads(participations_response.content.decode("utf-8"))["data"]
+      context = {"success": True, "competition": competition, "participations": participations}
+
+      return render(request, "competition_detail.html", context)
+    else:
+      response = {"error": True, "message": "Fail to request the resources"}
+      return JsonResponse(response, status=405)
   else:
     response = {
         "error": True,
         "message": "{} method not allowed".format(request.method)
     }
     return JsonResponse(response, status=405)
-
 
 @csrf_exempt
-def v1_study(request, study_id):
-  url = "http://127.0.0.1:{}/suggestion/v1/studies/{}".format(
-      request.META.get("SERVER_PORT"), study_id)
-
+def v1_participation(request, competition_id):
   if request.method == "GET":
-    response = requests.get(url)
+    competition_url = "http://127.0.0.1:{}/tuning/v1/competitions/{}".format(
+            request.META.get("SERVER_PORT"), competition_id)
+    competition_response = requests.get(competition_url)
 
-    tirals_url = "http://127.0.0.1:{}/suggestion/v1/studies/{}/trials".format(
-        request.META.get("SERVER_PORT"), study_id)
-    tirals_response = requests.get(tirals_url)
+    participations_url = "http://127.0.0.1:{}/tuning/v1/participations".format(request.META.get("SERVER_PORT"))
+    participations_response = requests.get(participations_url)
 
-    if response.ok and tirals_response.ok:
-      study = json.loads(response.content.decode("utf-8"))["data"]
-      trials = json.loads(tirals_response.content.decode("utf-8"))["data"]
-      context = {"success": True, "study": study, "trials": trials}
-      return render(request, "study_detail.html", context)
+    if competition_response.ok and participations_response.ok:
+      competition = json.loads(competition_response.content.decode("utf-8"))["data"]
+      participations = json.loads(participations_response.content.decode("utf-8"))["data"]
+      context = {"success": True, "competition": competition, "participations": participations}
+      return render(request, "competition_detail.html", context)
     else:
-      response = {
-          "error": True,
-          "message": "Fail to request the url: {}".format(url)
-      }
+      response = {"error": True, "message": "Fail to request the resources"}
       return JsonResponse(response, status=405)
-  elif request.method == "DELETE" or request.method == "POST":
-    response = requests.delete(url)
-    messages.info(request, response.content)
-    return redirect("index")
   else:
     response = {
-        "error": True,
-        "message": "{} method not allowed".format(request.method)
+      "error": True,
+      "message": "{} method not allowed".format(request.method)
     }
     return JsonResponse(response, status=405)
-
 
 @csrf_exempt
 def v1_study_suggestions(request, study_id):
@@ -168,7 +156,7 @@ def v1_trial(request, study_id, trial_id):
           "trial": trial,
           "trial_metrics": trial_metrics
       }
-      return render(request, "trial_detail.html", context)
+      return render(request, "paticipation_detail.html", context)
     else:
       response = {
           "error": True,
@@ -189,7 +177,7 @@ def v1_trial(request, study_id, trial_id):
 
     trial = json.loads(response.content.decode("utf-8"))["data"]
     context = {"success": True, "trial": trial, "trial_metrics": []}
-    return render(request, "trial_detail.html", context)
+    return render(request, "participation_detail.html", context)
   else:
     response = {
         "error": True,
@@ -228,7 +216,7 @@ def v1_study_trial_metric(request, study_id, trial_id, metric_id):
       trial_metric = json.loads(response.content.decode("utf-8"))["data"]
       context = {"success": True, "trial_metric": trial_metric}
       # TODO: Add the detail page of trial metric
-      return render(request, "trial_detail.html", context)
+      return render(request, "participation_detail.html", context)
     else:
       response = {
           "error": True,

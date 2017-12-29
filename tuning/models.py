@@ -37,7 +37,7 @@ class Competition(models.Model):
                               dict["goal"], dict["computation_budge"])
 
   def to_json(self):
-    return {"id": self.id, "name": self.name}
+    return {"id": self.id, "name": self.name, "parameters_description": self.parameters_description, "goal": self.goal, "computation_budge": self.computation_budge, "theoretical_best_metrics": self.theoretical_best_metrics, "current_best_metrics": self.current_best_metrics, "status": self.status, "created_time": self.created_time, "updated_time": self.updated_time}
 
 
 class Participation(models.Model):
@@ -46,7 +46,7 @@ class Participation(models.Model):
   email = models.CharField(max_length=128, blank=False)
 
   current_best_metrics = models.FloatField(blank=True, null=True)
-  current_tiral_count = models.IntegerField(blank=True, null=True)
+  current_trial_count = models.IntegerField(blank=True, null=True)
 
   status = models.CharField(max_length=128, blank=False)
   created_time = models.DateTimeField(auto_now_add=True)
@@ -75,7 +75,12 @@ class Participation(models.Model):
         "id": self.id,
         "competition": self.competition.to_json(),
         "username": self.username,
-        "email": self.email
+        "email": self.email,
+        "current_best_metrics": self.current_best_metrics,
+        "current_trial_count": self.current_trial_count,
+        "status": self.status,
+        "created_time": self.created_time,
+        "updated_time": self.updated_time
     }
 
 
@@ -110,5 +115,8 @@ class Trial(models.Model):
         "id": self.id,
         "particiption": self.participation.to_json(),
         "parameters_instance": self.parameters_instance,
-        "metrics": self.metrics
+        "metrics": self.metrics,
+        "status": self.status,
+        "created_time": self.created_time,
+        "updated_time": self.updated_time
     }
