@@ -11,6 +11,9 @@ The hyper-parameters tuning game for black box optimization
 ## Deploy
 
 ```
+./manage.py makemigrations tuning
+./manage.py migrate
+./manage.py initialize_database
 ./manage.py runserver 0.0.0.0:8000
 ```
 
