@@ -106,3 +106,10 @@ cd ./sdk/examples/
 ./test_tuning_game_api.py
 ./crud_trial.py
 ```
+
+Format the code with standard tools.
+
+```
+isort **/*.py
+yapf --style='{indent_width=2}' -i **/*.py
+```

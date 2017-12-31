@@ -89,7 +89,24 @@ class Command(BaseCommand):
         "computation_budge":
         100,
         "theoretical_best_metrics":
-        -1,
+        -1.0,
+    }
+    competition = Competition.create_from_dict(competition_dict)
+
+    # MnistKerasDnn
+    competition_dict = {
+        "name":
+            "MnistKerasDnn",
+        "introduction":
+            "The uderlying game is the Keras DNN model for MNIST dataset. It has only three parameter.",
+        "parameters_description":
+            '{"params":[{"parameterName": "batch_size", "type": "INTEGER"}, {"parameterName": "hidden1_number", "type": "INTEGER"}, {"parameterName": "hidden2_number", "type": "INTEGER"}]}',
+        "goal":
+            "MAXIMIZE",
+        "computation_budge":
+            100,
+        "theoretical_best_metrics":
+            1.0,
     }
     competition = Competition.create_from_dict(competition_dict)
 
