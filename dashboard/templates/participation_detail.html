@@ -21,6 +21,10 @@
             <th class="text-center success">Value</th>
 
             <tr>
+                <td class="text-center active">Competition Name</td>
+                <td class="text-center success"><a href="/dashboard/v1/competitions/{{ participation.competition.id }}">{{ participation.competition.name }}</a></td>
+            </tr>
+            <tr>
                 <td class="text-center active">Id</td>
                 <td class="text-center success">{{ participation.id }}</td>
             </tr>
@@ -80,7 +84,7 @@
             <tr>
                 <td class="text-center active">{{ trial.id }}</td>
                 <td class="text-center success">{{ trial.parameters_instance }}</td>
-                <td class="text-center warning">{{ trial.objective_value }}</td>
+                <td class="text-center warning">{{ trial.metrics }}</td>
                 <td class="text-center danger">{{ trial.status }}</td>
                 <td class="text-center info">{{ trial.created_time }}</td>
                 <td class="text-center active">{{ trial.updated_time }}</td>

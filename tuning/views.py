@@ -34,7 +34,8 @@ def v1_competitions(request):
     goal = data["goal"]
     computation_budge = int(data["computation_budge"])
 
-    competition = Competition.create(name, parameters_description, goal, computation_budge)
+    competition = Competition.create(name, parameters_description, goal,
+                                     computation_budge)
     return JsonResponse({"data": competition.to_json()})
 
   else:
@@ -43,7 +44,14 @@ def v1_competitions(request):
 
 @csrf_exempt
 def v1_competition(request, competition_id):
-  competition = Competition.objects.get(id=competition_id)
+  competition_id = int(competition_id)
+
+  # If pass id as -1, try get object with the name
+  if competition_id == -1:
+    name = request.GET.get("name", None)
+    competition = Competition.objects.get(name=name)
+  else:
+    competition = Competition.objects.get(id=competition_id)
 
   if request.method == "GET":
     return JsonResponse({"data": competition.to_json()})
@@ -107,7 +115,22 @@ def v1_participations(request):
 
 @csrf_exempt
 def v1_participation(request, participation_id):
-  participation = Participation.objects.get(id=participation_id)
+  participation_id = int(participation_id)
+
+  if participation_id == -1:
+    competition_name = request.GET.get("competition_name", None)
+    competition = Competition.objects.get(name=competition_name)
+    username = request.GET.get("username", None)
+    email = request.GET.get("email", None)
+
+    if username:
+      participation = Participation.objects.get(
+          competition=competition, username=username)
+    else:
+      participation = Participation.objects.get(
+          competition=competition, email=email)
+  else:
+    participation = Participation.objects.get(id=participation_id)
 
   if request.method == "GET":
     return JsonResponse({"data": participation.to_json()})
@@ -149,11 +172,11 @@ def v1_trials(request):
   elif request.method == "POST":
     data = json.loads(request.body)
 
-    particiption_id = data["particiption_id"]
-    particiption = Participation.objects.get(id=particiption_id)
+    participation_id = data["participation_id"]
+    participation = Participation.objects.get(id=participation_id)
     parameters_instance = json.dumps(data["parameters_instance"])
 
-    trial = Trial.create(particiption, parameters_instance)
+    trial = Trial.create(participation, parameters_instance)
     return JsonResponse({"data": trial.to_json()})
 
   else:
@@ -162,6 +185,8 @@ def v1_trials(request):
 
 @csrf_exempt
 def v1_trial(request, trial_id):
+  trial_id = int(trial_id)
+
   trial = Trial.objects.get(id=trial_id)
 
   if request.method == "GET":
@@ -188,6 +213,7 @@ def v1_trial(request, trial_id):
 
 @csrf_exempt
 def v1_trial_execute(request, trial_id):
+  trial_id = int(trial_id)
 
   if request.method == "POST":
     trial = Trial.objects.get(id=trial_id)
@@ -195,7 +221,7 @@ def v1_trial_execute(request, trial_id):
     # Get competition package by name
     competiton_name_package_map = settings.REGISTERED_COMPETITION
     # Example: "SquareFunction"
-    class_name = trial.particiption.competition.name
+    class_name = trial.participation.competition.name
     # Example: "tuning.competition.square_function"
     module_name = competiton_name_package_map.get(class_name)
 

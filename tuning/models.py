@@ -109,9 +109,9 @@ class Trial(models.Model):
     return "{}".format(self.parameters_instance)
 
   @classmethod
-  def create(cls, particiption, parameters_instance):
+  def create(cls, participation, parameters_instance):
     instance = cls()
-    instance.participation = particiption
+    instance.participation = participation
     instance.parameters_instance = parameters_instance
     instance.status = "NotExecuted"
     instance.save()

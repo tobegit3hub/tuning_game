@@ -50,6 +50,17 @@ class TuningGameClient(object):
 
     return competition
 
+  def get_competition_by_name(self, competition_name):
+    url = "{}/tuning/v1/competitions/{}?name={}".format(
+        self.endpoint, -1, competition_name)
+    response = requests.get(url)
+
+    competition = None
+    if response.ok:
+      competition = Competition.create_from_dict(response.json()["data"])
+
+    return competition
+
   def delete_competition(self, competition_id):
     url = "{}/tuning/v1/competitions/{}".format(self.endpoint, competition_id)
     response = requests.delete(url)
@@ -93,16 +104,39 @@ class TuningGameClient(object):
       participation = Participation.create_from_dict(response.json()["data"])
     return participation
 
+  def get_participation_by_competition_name_and_username(
+      self, competition_name, participation_username):
+    url = "{}/tuning/v1/participations/{}?competition_name={}&username={}".format(
+        self.endpoint, -1, competition_name, participation_username)
+    response = requests.get(url)
+
+    participation = None
+    if response.ok:
+      participation = Participation.create_from_dict(response.json()["data"])
+    return participation
+
+    def get_participation_by_competition_name_and_email(
+        self, competition_name, participation_email):
+      url = "{}/tuning/v1/participations/{}?competition_name={}&email={}".format(
+          self.endpoint, -1, competition_name, participation_email)
+
+    response = requests.get(url)
+
+    participation = None
+    if response.ok:
+      participation = Participation.create_from_dict(response.json()["data"])
+    return participation
+
   def delete_participation(self, participation_id):
     url = "{}/tuning/v1/participations/{}".format(self.endpoint,
                                                   participation_id)
     response = requests.delete(url)
     return response
 
-  def create_trial(self, particiption_id, parameters_instance):
+  def create_trial(self, participation_id, parameters_instance):
     url = "{}/tuning/v1/trials".format(self.endpoint)
     request_data = {
-        "particiption_id": particiption_id,
+        "participation_id": participation_id,
         "parameters_instance": parameters_instance
     }
     response = requests.post(url, json=request_data)
@@ -115,6 +149,20 @@ class TuningGameClient(object):
 
   def list_trials(self):
     url = "{}/tuning/v1/trials".format(self.endpoint)
+    response = requests.get(url)
+
+    trials = []
+    if response.ok:
+      dicts = response.json()["data"]
+      for dict in dicts:
+        trial = Trial.create_from_dict(dict)
+        trials.append(trial)
+
+    return trials
+
+  def list_trials_by_participation_id(self, participation_id):
+    url = "{}/tuning/v1/trials?participation_id={}".format(
+        self.endpoint, participation_id)
     response = requests.get(url)
 
     trials = []
@@ -145,3 +193,10 @@ class TuningGameClient(object):
     url = "{}/tuning/v1/trials/{}/execute".format(self.endpoint, trial_id)
     response = requests.post(url)
     return response
+
+  def print_participation_result(self, participation_id):
+    trials = self.list_trials_by_participation_id(participation_id)
+
+    print("{:16} | {:32}".format("Metrics", "Parameters"))
+    for trial in trials:
+      print("{:16} | {:32}".format(trial.metrics, trial.parameters_instance))
