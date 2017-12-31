@@ -2,9 +2,9 @@
 
 from tuninggame.client import TuningGameClient
 
-endpoint = "http://127.0.0.1:8000"
+endpoint = "http://0.0.0.0:8000"
 competition_name = "SquareFunction"
-username = "tobe"
+username = "tobe3"
 client = TuningGameClient(endpoint)
 
 
@@ -18,15 +18,15 @@ def run_trials():
   participation = client.get_participation_by_competition_name_and_username(
       competition_name, username)
 
-  parameters_instance = {"parameter": 10}
+  parameters_instance = {"parameter": 40}
   trial = client.create_trial(participation.id, parameters_instance)
   client.execute_trial(trial.id)
 
-  parameters_instance = {"parameter": -5}
+  parameters_instance = {"parameter": -25}
   trial = client.create_trial(participation.id, parameters_instance)
   client.execute_trial(trial.id)
 
-  parameters_instance = {"parameter": 1}
+  parameters_instance = {"parameter": 15.5}
   trial = client.create_trial(participation.id, parameters_instance)
   client.execute_trial(trial.id)
 

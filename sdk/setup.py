@@ -21,7 +21,9 @@ except ImportError:
 setup(
     name="tuninggame",
     version="0.1.0",
-    author="tobegit3hub",
+    author="tobe",
+    author_email="tobeg3oogle@gmail.com",
+    url="https://github.com/tobegit3hub/tuning_game",
     #install_requires=["requests>=2.6.0", "pyOpenSSL>=16.1.0",
     #                  "argcomplete>=1.4.1"],
     install_requires=[],
