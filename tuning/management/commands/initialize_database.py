@@ -131,8 +131,10 @@ class Command(BaseCommand):
     participation = Participation.create_from_dict(participation_dict)
 
     trial_dict = {
-        "participation": participation,
-        "parameters_instance": 'parameters = {"batch_size": 128, "hidden1_number": 512, "hidden2_number": 512}'
+        "participation":
+        participation,
+        "parameters_instance":
+        'parameters = {"batch_size": 128, "hidden1_number": 512, "hidden2_number": 512}'
     }
     Trial.create_from_dict(trial_dict)
 

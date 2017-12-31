@@ -81,9 +81,7 @@ There are battery-included competitions in TuningGame.
 * [OneUnknowQuadraticEquation](./tuning/competition/one_unknow_quadratic_equation.py)
 * [MnistKerasDnn](./tuning/competition/mnist_keras_dnn.py)
 
-It is easy to extend and add your new competition.
-
-Try adding the competition logic and test files in [competition](./tuning/competition/). Then add the information of package name and path in [settings.py](./settings.py).
+It is easy to extend and add your new competition. Please add the competition logic and test files in [competition](./tuning/competition/). Then add the information of package name and path in [settings.py](./settings.py).
 
 ```
 REGISTERED_COMPETITION = {
