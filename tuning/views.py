@@ -235,7 +235,35 @@ def v1_trial_execute(request, trial_id):
 
     # Update the trial in database
     trial.metrics = metrics
+    trial.status = "Executed"
     trial.save()
+
+    # Update the participation in database
+    trial.participation.status = "Tuning"
+    if trial.participation.current_best_metrics:
+      if trial.participation.competition.goal == "MAXIMIZE":
+        if metrics > trial.participation.current_best_metrics:
+          trial.participation.current_best_metrics = metrics
+      else:
+        if metrics < trial.participation.current_best_metrics:
+          trial.participation.current_best_metrics = metrics
+    else:
+      trial.participation.current_best_metrics = metrics
+    trial.participation.current_trial_count += 1
+    trial.participation.save()
+
+    # Update the competition in database
+    competition = trial.participation.competition
+    if competition.current_best_metrics:
+      if competition.goal == "MAXIMIZE":
+        if metrics > competition.current_best_metrics:
+          competition.current_best_metrics = metrics
+      else:
+        if metrics < competition.current_best_metrics:
+          competition.current_best_metrics = metrics
+    else:
+      competition.current_best_metrics = metrics
+    competition.save()
 
     return JsonResponse({"data": trial.to_json()})
 

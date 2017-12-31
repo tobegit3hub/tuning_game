@@ -57,7 +57,7 @@ class Participation(models.Model):
   email = models.CharField(max_length=128, blank=False)
 
   current_best_metrics = models.FloatField(blank=True, null=True)
-  current_trial_count = models.IntegerField(blank=True, null=True)
+  current_trial_count = models.IntegerField(blank=False, default=0)
 
   status = models.CharField(max_length=128, blank=False)
   created_time = models.DateTimeField(auto_now_add=True)

@@ -4,7 +4,7 @@ from tuninggame.client import TuningGameClient
 
 endpoint = "http://0.0.0.0:8000"
 competition_name = "SquareFunction"
-username = "tobe3"
+username = "tobe"
 client = TuningGameClient(endpoint)
 
 
@@ -41,10 +41,10 @@ def main():
   print("Play SquareFunction competition")
 
   # Register for the first time
-  #registry_participation()
+  registry_participation()
 
   # Run more times with other parameters
-  #run_trials()
+  run_trials()
 
   # Check the current result
   check_result()
