@@ -28,7 +28,6 @@ class MnistKerasDnn(AbstractCompetition):
 
     return metrics
 
-
   def train(self, batch_size=128, hidden1=512, hidden2=512):
     num_classes = 10
     #epochs = 20
@@ -51,7 +50,7 @@ class MnistKerasDnn(AbstractCompetition):
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
     model = Sequential()
-    model.add(Dense(hidden1, activation='relu', input_shape=(784,)))
+    model.add(Dense(hidden1, activation='relu', input_shape=(784, )))
     model.add(Dropout(0.2))
     model.add(Dense(hidden2, activation='relu'))
     model.add(Dropout(0.2))
@@ -59,15 +58,18 @@ class MnistKerasDnn(AbstractCompetition):
 
     model.summary()
 
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=RMSprop(),
-                  metrics=['accuracy'])
+    model.compile(
+        loss='categorical_crossentropy',
+        optimizer=RMSprop(),
+        metrics=['accuracy'])
 
-    history = model.fit(x_train, y_train,
-                        batch_size=batch_size,
-                        epochs=epochs,
-                        verbose=1,
-                        validation_data=(x_test, y_test))
+    history = model.fit(
+        x_train,
+        y_train,
+        batch_size=batch_size,
+        epochs=epochs,
+        verbose=1,
+        validation_data=(x_test, y_test))
     score = model.evaluate(x_test, y_test, verbose=0)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])

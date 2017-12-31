@@ -93,20 +93,33 @@ class Command(BaseCommand):
     }
     competition = Competition.create_from_dict(competition_dict)
 
+    participation_dict = {
+        "competition": competition,
+        "username": "Admin",
+        "email": "tobeg3oogle@gmail.com"
+    }
+    participation = Participation.create_from_dict(participation_dict)
+
+    trial_dict = {
+        "participation": participation,
+        "parameters_instance": '{"x": 10.0}'
+    }
+    Trial.create_from_dict(trial_dict)
+
     # MnistKerasDnn
     competition_dict = {
         "name":
-            "MnistKerasDnn",
+        "MnistKerasDnn",
         "introduction":
-            "The uderlying game is the Keras DNN model for MNIST dataset. It has only three parameter.",
+        "The uderlying game is the Keras DNN model for MNIST dataset. It has only three parameter.",
         "parameters_description":
-            '{"params":[{"parameterName": "batch_size", "type": "INTEGER"}, {"parameterName": "hidden1_number", "type": "INTEGER"}, {"parameterName": "hidden2_number", "type": "INTEGER"}]}',
+        '{"params":[{"parameterName": "batch_size", "type": "INTEGER"}, {"parameterName": "hidden1_number", "type": "INTEGER"}, {"parameterName": "hidden2_number", "type": "INTEGER"}]}',
         "goal":
-            "MAXIMIZE",
+        "MAXIMIZE",
         "computation_budge":
-            100,
+        100,
         "theoretical_best_metrics":
-            1.0,
+        1.0,
     }
     competition = Competition.create_from_dict(competition_dict)
 
@@ -119,7 +132,7 @@ class Command(BaseCommand):
 
     trial_dict = {
         "participation": participation,
-        "parameters_instance": '{"parameter": 10.0}'
+        "parameters_instance": 'parameters = {"batch_size": 128, "hidden1_number": 512, "hidden2_number": 512}'
     }
     Trial.create_from_dict(trial_dict)
 

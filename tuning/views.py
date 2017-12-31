@@ -242,6 +242,8 @@ def v1_trial_execute(request, trial_id):
     competition = clazz()
 
     # Run competition to get metrics
+    trial.status = "Executing"
+    trial.save()
     metrics = competition.execute(trial.parameters_instance)
 
     # Update the trial in database

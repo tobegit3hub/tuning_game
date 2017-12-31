@@ -72,6 +72,27 @@ def check_result():
 
 ![Play Tuning Game](./images/play_sqaure_function.png)
 
+## Competitions
+
+There are battery-included competitions in TuningGame.
+
+* [ReturnInputGame](./tuning/competition/return_input_game.py)
+* [SquareFunction](./tuning/competition/square_function.py)
+* [OneUnknowQuadraticEquation](./tuning/competition/one_unknow_quadratic_equation.py)
+* [MnistKerasDnn](./tuning/competition/mnist_keras_dnn.py)
+
+It is easy to extend and add your new competition.
+
+Try adding the competition logic and test files in [competition](./tuning/competition/). Then add the information of package name and path in [settings.py](./settings.py).
+
+```
+REGISTERED_COMPETITION = {
+    "ReturnInputGame": "tuning.competition.return_input_game",
+    "SquareFunction": "tuning.competition.square_function",
+    "OneUnknowQuadraticEquation": "tuning.competition.one_unknow_quadratic_equation",
+    "MnistKerasDnn": "tuning.competition.mnist_keras_dnn",
+}
+```
 
 ## Deployment
 

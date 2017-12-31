@@ -14,7 +14,11 @@ class MnistKerasDnnTest(TestCase):
 
   def test_execute(self):
 
-    parameters = {"batch_size": 128, "hidden1_number": 512, "hidden2_number": 512}
+    parameters = {
+        "batch_size": 128,
+        "hidden1_number": 512,
+        "hidden2_number": 512
+    }
     parameters_instance = json.dumps(parameters)
     expected_max_metrics = 0.98
     expected_min_metrics = 0.95
