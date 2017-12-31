@@ -34,8 +34,17 @@ def v1_competitions(request):
     goal = data["goal"]
     computation_budge = int(data["computation_budge"])
 
-    competition = Competition.create(name, parameters_description, goal,
-                                     computation_budge)
+    theoretical_best_metrics = None
+    if "theoretical_best_metrics" in data:
+      theoretical_best_metrics = int(data["theoretical_best_metrics"])
+
+    competition = Competition.create(
+        name,
+        parameters_description,
+        goal,
+        computation_budge,
+        theoretical_best_metrics=theoretical_best_metrics)
+
     return JsonResponse({"data": competition.to_json()})
 
   else:

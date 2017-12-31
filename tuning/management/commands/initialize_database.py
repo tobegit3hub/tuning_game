@@ -25,7 +25,9 @@ class Command(BaseCommand):
         "goal":
         "MAXIMIZE",
         "computation_budge":
-        100
+        100,
+        "theoretical_best_metrics":
+        9223372036854775807
     }
     competition = Competition.create_from_dict(competition_dict)
 
@@ -51,7 +53,9 @@ class Command(BaseCommand):
         "goal":
         "MAXIMIZE",
         "computation_budge":
-        100
+        100,
+        "theoretical_best_metrics":
+        9223372036854775807
     }
     competition = Competition.create_from_dict(competition_dict)
 
@@ -77,7 +81,9 @@ class Command(BaseCommand):
         "goal":
         "MINIMIZE",
         "computation_budge":
-        100
+        100,
+        "theoretical_best_metrics":
+        -1,
     }
     competition = Competition.create_from_dict(competition_dict)
 

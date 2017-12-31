@@ -21,20 +21,34 @@ class Competition(models.Model):
     return "{}_{}_{}".format(self.name, self.parameters_description, self.goal)
 
   @classmethod
-  def create(cls, name, parameters_description, goal, computation_budge):
+  def create(cls,
+             name,
+             parameters_description,
+             goal,
+             computation_budge,
+             theoretical_best_metrics=None):
     instance = cls()
     instance.name = name
     instance.parameters_description = parameters_description
     instance.goal = goal
     instance.computation_budge = computation_budge
     instance.status = "Launch"
+    instance.theoretical_best_metrics = theoretical_best_metrics
     instance.save()
     return instance
 
   @classmethod
   def create_from_dict(self, dict):
-    return Competition.create(dict["name"], dict["parameters_description"],
-                              dict["goal"], dict["computation_budge"])
+    competition = Competition.create(dict["name"],
+                                     dict["parameters_description"],
+                                     dict["goal"], dict["computation_budge"])
+
+    if "theoretical_best_metrics" in dict:
+      competition.theoretical_best_metrics = dict["theoretical_best_metrics"]
+
+    competition.save()
+
+    return competition
 
   def to_json(self):
     return {
