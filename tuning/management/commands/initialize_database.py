@@ -20,6 +20,8 @@ class Command(BaseCommand):
     competition_dict = {
         "name":
         "ReturnInputGame",
+        "introduction":
+        "The game will return the exact number of the input. It has only one parameter.",
         "parameters_description":
         '{"params":[{"parameterName": "parameter", "type": "DOUBLE"}]}',
         "goal":
@@ -48,6 +50,8 @@ class Command(BaseCommand):
     competition_dict = {
         "name":
         "SquareFunction",
+        "introduction":
+        "The game will return the square of the input. It has only one parameter.",
         "parameters_description":
         '{"params":[{"parameterName": "parameter", "type": "DOUBLE"}]}',
         "goal":
@@ -76,6 +80,8 @@ class Command(BaseCommand):
     competition_dict = {
         "name":
         "OneUnknowQuadraticEquation",
+        "introduction":
+        "The uderlying game is the quadratic equation with on unknow variable which has the optimal value. It has only one parameter.",
         "parameters_description":
         '{"params":[{"parameterName": "x", "type": "DOUBLE"}]}',
         "goal":

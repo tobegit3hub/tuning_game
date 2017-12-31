@@ -6,6 +6,7 @@ from django.db import models
 
 class Competition(models.Model):
   name = models.CharField(max_length=128, blank=False)
+  introduction = models.CharField(max_length=8096, blank=False, default="")
   parameters_description = models.CharField(max_length=1024, blank=False)
   goal = models.CharField(max_length=128, blank=False, default="MAXIMIZE")
   computation_budge = models.IntegerField(blank=False)
@@ -23,23 +24,25 @@ class Competition(models.Model):
   @classmethod
   def create(cls,
              name,
+             introduction,
              parameters_description,
              goal,
              computation_budge,
              theoretical_best_metrics=None):
     instance = cls()
     instance.name = name
+    instance.introduction = introduction
     instance.parameters_description = parameters_description
     instance.goal = goal
     instance.computation_budge = computation_budge
-    instance.status = "Launch"
+    instance.status = "Active"
     instance.theoretical_best_metrics = theoretical_best_metrics
     instance.save()
     return instance
 
   @classmethod
   def create_from_dict(self, dict):
-    competition = Competition.create(dict["name"],
+    competition = Competition.create(dict["name"], dict["introduction"],
                                      dict["parameters_description"],
                                      dict["goal"], dict["computation_budge"])
 
@@ -54,6 +57,7 @@ class Competition(models.Model):
     return {
         "id": self.id,
         "name": self.name,
+        "introduction": self.introduction,
         "parameters_description": self.parameters_description,
         "goal": self.goal,
         "computation_budge": self.computation_budge,
@@ -86,7 +90,7 @@ class Participation(models.Model):
     instance.competition = competition
     instance.username = username
     instance.email = email
-    instance.status = "Active"
+    instance.status = "Initialized"
     instance.save()
     return instance
 

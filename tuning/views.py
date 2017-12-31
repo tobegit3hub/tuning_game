@@ -30,6 +30,7 @@ def v1_competitions(request):
     data = json.loads(request.body)
 
     name = data["name"]
+    introduction = data["introduction"]
     parameters_description = json.dumps(data["parameters_description"])
     goal = data["goal"]
     computation_budge = int(data["computation_budge"])
@@ -40,6 +41,7 @@ def v1_competitions(request):
 
     competition = Competition.create(
         name,
+        introduction,
         parameters_description,
         goal,
         computation_budge,
