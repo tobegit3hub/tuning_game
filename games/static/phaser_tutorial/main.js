@@ -1,88 +1,48 @@
-//var width = window.innerWidth;
-//var height = window.innerHeight;
 var width = 800;
 var height = 600;
 var game = new Phaser.Game(width, height, Phaser.AUTO, "game");
-//var game = new Phaser.Game(800, 600, Phaser.CANVAS, "game01v");
-
-// The input field in the canvas
-// var password;
 
 var spacefield;
 var backgroundv;
-
 var player;
 var cursors;
 var bullets;
 var bulletTime = 0;
-
 var enemies;
-
 var score = 0;
 var scoreText;
 var winText;
 
+// For TuningGame
 var metrics = "none";
 var metricsTextWidge;
-
 var submitButton;
-
 var inputParameterTextWidget;
 var inputParameterValue;
 
 var mainState = {
 
     preload: function () {
-
         game.stage.backgroundColor = '#000000';
 
-        /*
-         game.load.image("starfield", "assets/starfield.png");
-         game.load.image("player", "assets/player.png");
-         game.load.image("bullet", "assets/bullet.png");
-         game.load.image("enemy", "assets/enemy.png");
-         */
-
+        // Load images
         game.load.image("starfield",
             "/static/phaser_tutorial/images/starfield.png");
         game.load.image("player", "/static/phaser_tutorial/images/player.png");
         game.load.image("bullet", "/static/phaser_tutorial/images/bullet.png");
         game.load.image("enemy", "/static/phaser_tutorial/images/enemy.png");
-
         game.load.image("submitButton",
             "/static/phaser_tutorial/images/submit_button.png");
 
+        // Load audio
         game.load.audio("bgm",
             "/static/phaser_tutorial/audio/pokemon2.mp3");
-
-        /*
-         var bgMusic = game.add.audio("assets/audio/pokemon2.mp3");
-
-         bgMusic.loopFull();
-         */
-
-        /*
-         //var theUrl = "http://hypertune.cn:8000/tuning/v1/competitions"
-         var theUrl = "http://127.0.0.1:8000/tuning/v1/competitions"
-         var xmlHttp = new XMLHttpRequest();
-         xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-         xmlHttp.send( null );
-         var response = xmlHttp.responseText;
-
-         console.log(response);
-         */
-
-        //game.add.plugin(PhaserInput.Plugin);
-
     },
 
     create: function () {
 
         // Set game engine
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
-        // Create sprites
-        //game.add.sprite(0, 0, "player.png");
 
         //spacefield = game.add.tileSprite(0, 0, 800, 600, "starfield");
         spacefield = game.add.tileSprite(0, 0, width, height, "starfield");
@@ -118,6 +78,7 @@ var mainState = {
             "You won!", {font: "32px Arial", fill: "#fff"});
         winText.visible = false;
 
+        // For TuningGame
         metricsTextWidge = game.add.text(16, 16, "Metrics: none",
             {font: "32px Arial", fill: "#fff"});
 
@@ -126,20 +87,6 @@ var mainState = {
 
         submitButton = game.add.button(game.world.centerX - 95, 400,
             "submitButton", submitButtonOnClick, this, 2, 1, 0);
-
-        /*
-         password = game.add.inputField(110, 190, {
-         font: '18px Arial',
-         fill: '#212121',
-         fontWeight: 'bold',
-         width: 150,
-         padding: 8,
-         borderWidth: 1,
-         borderColor: '#000',
-         borderRadius: 6,
-         placeHolder: ''
-         });
-         */
 
         music = game.sound.play("bgm");
 
@@ -174,12 +121,9 @@ var mainState = {
             winText.visible = true;
         }
 
-        //updateMetrics();
 
-        //inputParameterValue = "22";
-
+        // For TuningGame
         inputParameterValue = $("input#parameter1").get(0).value;
-
         inputParameterTextWidget.text = "x: " + inputParameterValue;
 
     }
@@ -199,10 +143,8 @@ function fireBullet() {
 }
 
 function createEnemies() {
-
     for (var y = 0; y < 4; y++) {
         for (var x = 0; x < 10; x++) {
-
             var enemy = enemies.create(x * 48, y * 50, "enemy");
             enemy.anchor.setTo(0.5, 0.5);
         }
@@ -216,7 +158,6 @@ function createEnemies() {
         Phaser.Easing.Linear.None, true, 0, 1000, true);
 
     tween.onLoop.add(descend, this);
-
 }
 
 function descend() {
@@ -237,20 +178,7 @@ function updateMetricsTextWidget(metrics) {
 
 // Click the submit button
 function submitButtonOnClick() {
-
-    //background.visible =! background.visible;
-    console.log("Click button");
-
-    console.log(inputParameterValue);
-
-    $.get("http://127.0.0.1:8000/tuning/v1/competitions",
-        function (data, status) {
-            //alert("Data: " + data + "\nStatus: " + status);
-            console.log("KKKK");
-            console.log(data);
-        });
-
-    //request_data = {"participation_id": 69, "parameters_instance": {"x": 10.0}}
+    console.log("Click submit button");
 
     parameterValue = parseFloat(inputParameterValue);
     request_data = {
@@ -258,6 +186,7 @@ function submitButtonOnClick() {
         "parameters_instance": {"x": parameterValue}
     }
 
+    // Request to create the trial
     $.ajax({
         url: 'http://127.0.0.1:8000/tuning/v1/trials',
         dataType: 'json',
@@ -266,23 +195,18 @@ function submitButtonOnClick() {
         data: JSON.stringify(request_data),
         processData: false,
         success: function (data, textStatus, jQxhr) {
-            console.log("Created the trial");
-            console.log(data);
-            //$('#response pre').html( JSON.stringify( data ) );
+            console.log("Succeed to create the trial");
 
             trial_id = data["data"]["id"];
 
+            // Request to execute the trial
             $.post("http://127.0.0.1:8000/tuning/v1/trials/" + trial_id
                 + "/execute", function (data, status) {
-                //alert("Data: " + data + "\nStatus: " + status);
-                console.log("Executed the trial");
-                console.log(data);
+
+                console.log("Succeed to execute the trial");
 
                 metrics = data["data"]["metrics"];
-                console.log("The metrics is changed to: " + metrics);
-
                 updateMetricsTextWidget(metrics);
-
             });
 
         },
@@ -298,13 +222,7 @@ game.state.add("mainState", mainState);
 game.state.start("mainState");
 
 $(document).ready(function () {
-    $("p").click(function () {
-        //$(this).hide();
-        alert("Clicked me");
-
-    });
-
+    // Update with default parameters
     inputParameterValue = $("input#parameter1").text();
-    console.log(inputParameterValue);
 
 });

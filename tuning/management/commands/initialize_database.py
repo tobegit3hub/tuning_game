@@ -35,8 +35,8 @@ class Command(BaseCommand):
 
     participation_dict = {
         "competition": competition,
-        "username": "Admin",
-        "email": "tobeg3oogle@gmail.com"
+        "username": "test",
+        "email": "test@gmail.com"
     }
     participation = Participation.create_from_dict(participation_dict)
 
@@ -65,8 +65,8 @@ class Command(BaseCommand):
 
     participation_dict = {
         "competition": competition,
-        "username": "Admin",
-        "email": "tobeg3oogle@gmail.com"
+        "username": "test",
+        "email": "test@gmail.com"
     }
     participation = Participation.create_from_dict(participation_dict)
 
@@ -95,8 +95,8 @@ class Command(BaseCommand):
 
     participation_dict = {
         "competition": competition,
-        "username": "Admin",
-        "email": "tobeg3oogle@gmail.com"
+        "username": "test",
+        "email": "test@gmail.com"
     }
     participation = Participation.create_from_dict(participation_dict)
 
@@ -125,8 +125,8 @@ class Command(BaseCommand):
 
     participation_dict = {
         "competition": competition,
-        "username": "Admin",
-        "email": "tobeg3oogle@gmail.com"
+        "username": "test",
+        "email": "test@gmail.com"
     }
     participation = Participation.create_from_dict(participation_dict)
 
