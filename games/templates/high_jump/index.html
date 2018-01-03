@@ -10,7 +10,7 @@
     <script type="text/javascript" src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/phaser.min.js"></script>
 
-    <script type="text/javascript" src="/static/phaser_tutorial/main.js"></script>
+    <script type="text/javascript" src="/static/high_jump/main.js"></script>
 </head>
 
 <body>
@@ -35,9 +35,17 @@
                   onsubmit="return confirm('Do you want to create theresource?');">
 
                 <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">x :</label>
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">x1:</label>
                     <div class="col-sm-10">
-                        <input id="parameter1" type="range" min="-100" max="100" value="0"
+                        <input id="x1" type="range" min="-10" max="10" value="0"
+                               class="slider">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">x2:</label>
+                    <div class="col-sm-10">
+                        <input id="x2" type="range" min="-10" max="10" value="0"
                                class="slider">
                     </div>
                 </div>

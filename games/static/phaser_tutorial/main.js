@@ -36,7 +36,7 @@ var mainState = {
 
         // Load audio
         game.load.audio("bgm",
-            "/static/phaser_tutorial/audio/pokemon2.mp3");
+            "/static/games/audio/pokemon2.mp3");
     },
 
     create: function () {
@@ -70,7 +70,7 @@ var mainState = {
         enemies.enableBody = true;
         enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
-        createEnemies()
+        createEnemies();
 
         scoreText = game.add.text(0, 550, "Score:",
             {font: "32px Arial", fill: "#fff"});

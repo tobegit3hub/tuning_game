@@ -20,6 +20,8 @@ def play(request):
 
   if request.method == "GET":
 
+    game_name = request.GET.get("game", "HighJump")
+
     competition_name = "OneUnknowQuadraticEquation"
     competition = Competition.objects.get(name=competition_name)
 
@@ -38,7 +40,13 @@ def play(request):
         "participation": participation,
         "trials": trials
     }
-    return render(request, "phaser_tutorial/index.html", context)
+
+    if game_name=="HighJump":
+      template_file = "high_jump/index.html"
+    else:
+      template_file = "phaser_tutorial/index.html"
+
+    return render(request, template_file, context)
 
   else:
     response = {
