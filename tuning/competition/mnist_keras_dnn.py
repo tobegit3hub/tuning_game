@@ -28,7 +28,7 @@ class MnistKerasDnn(AbstractCompetition):
 
     return metrics
 
-  def train(self, batch_size=128, hidden1=512, hidden2=512):
+  def train(self, batch_size=128, hidden1_number=512, hidden2_number=512):
     num_classes = 10
     #epochs = 20
     epochs = 1
@@ -50,9 +50,9 @@ class MnistKerasDnn(AbstractCompetition):
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
     model = Sequential()
-    model.add(Dense(hidden1, activation='relu', input_shape=(784, )))
+    model.add(Dense(hidden1_number, activation='relu', input_shape=(784, )))
     model.add(Dropout(0.2))
-    model.add(Dense(hidden2, activation='relu'))
+    model.add(Dense(hidden2_number, activation='relu'))
     model.add(Dropout(0.2))
     model.add(Dense(num_classes, activation='softmax'))
 

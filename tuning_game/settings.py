@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'tuning',
     'dashboard',
+    'games',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +123,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+DEBUG = True
+
 # Registry all competitions here
 REGISTERED_COMPETITION = {
     "ReturnInputGame":
@@ -133,5 +138,3 @@ REGISTERED_COMPETITION = {
     "MnistKerasDnn":
     "tuning.competition.mnist_keras_dnn",
 }
-
-CORS_ORIGIN_ALLOW_ALL = True
