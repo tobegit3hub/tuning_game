@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^tuning/', include('tuning.urls')),
     url(r'^dashboard/', include('dashboard.urls')),
+    url(r'^games/', include('games.urls')),
 ]
