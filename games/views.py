@@ -23,6 +23,8 @@ def play(request):
     competition_name = "OneUnknowQuadraticEquation"
     competition = Competition.objects.get(name=competition_name)
 
+    participations = Participation.objects.filter(competition=competition)
+
     username = "wawa"
     participation = Participation.objects.get(
         competition=competition, username=username)
@@ -32,6 +34,7 @@ def play(request):
     context = {
         "success": True,
         "competition": competition,
+        "participations": participations,
         "participation": participation,
         "trials": trials
     }

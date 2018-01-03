@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    <title>Game</title>
+
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/static/phaser.min.js"></script>
+
+    <script type="text/javascript" src="/static/phaser_tutorial/main.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div align="center">
+        <h1>Tuning Game</h1>
+
+        <p>Competition: {{ competition.name }}</p>
+        <p>Participation: {{ participation.username }}</p>
+    </div>
+
+
+    <div class="row">
+
+        <div id="game" class="col-md-9"></div>
+
+
+        <div id="submit_form" class="col-md-3">
+
+            <form action="/dashboard/v1/trials" method="post"
+                  onsubmit="return confirm('Do you want to create theresource?');">
+
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">x :</label>
+                    <div class="col-sm-10">
+                        <input id="parameter1" type="range" min="-100" max="100" value="0"
+                               class="slider" id="myRange">
+                        <!--
+                        <input id="parameter1_old" type="text" class="form-control" name="study_id" placeholder="1" required="required">
+                        -->
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+
+    </div>
+
+
+    <hr />
+
+    <div class="row">
+
+        <div id="leaderboard" class="col-md-6">
+            <div align="center">
+                <h3>Leader Board</h3>
+            </div>
+
+            <table class="table table-striped table-hover table-condensed">
+                <th class="text-center active">Username</th>
+                <th class="text-center active">Best Metrics</th>
+                <th class="text-center active">Trial Count</th>
+
+                {% for participation in participations %}
+                <tr>
+                    <td class="text-center">{{ participation.username }}</td>
+                    <td class="text-center">{{ participation.current_best_metrics }}</td>
+                    <td class="text-center">{{ participation.current_trial_count }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+        <div id="trial_metrics" class="col-md-6">
+            <div align="center">
+                <h3>My Trials</h3>
+            </div>
+
+            <table class="table table-striped table-hover table-condensed">
+                <th class="text-center active">Parameters</th>
+                <th class="text-center active">Metrics</th>
+                <th class="text-center active">Status</th>
+
+                {% for trial in trials %}
+                <tr>
+                    <td class="text-center">{{ trial.parameters_instance }}</td>
+                    <td class="text-center">{{ trial.metrics }}</td>
+                    <td class="text-center">{{ trial.status }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
