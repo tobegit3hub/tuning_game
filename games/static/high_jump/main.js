@@ -25,6 +25,8 @@ var parameterX2Text;
 var parameterX2Value;
 var metricsValue = "none";
 var metricsText;
+var metricsUpdateText;
+var metricsUpdateImage;
 var submitButton;
 
 
@@ -33,8 +35,9 @@ function preload() {
     game.load.spritesheet('player', '/static/high_jump/images/player.png', 32, 48);
     game.load.image('background', '/static/high_jump/images/background.png');
     game.load.image("submitButton", "/static/high_jump/images/submit_button.png");
-    game.load.image('star', '/static/high_jump/images//star.png');
-    game.load.image('platform', '/static/high_jump/images//platform.png');
+    game.load.image('star', '/static/high_jump/images/star.png');
+    game.load.image('platform', '/static/high_jump/images/platform.png');
+    game.load.image('rocket', '/static/high_jump/images/rocket.png');
 
     // Load audio
     game.load.audio("bgm", "/static/games/audio/pokemon.mp3");
@@ -91,13 +94,16 @@ function create() {
         star.body.bounce.x = 0.7 + Math.random() * 10.2;
     }
 
-    starNumberText = game.add.text(16, 550, 'Star: 0', { font: '24px Arial', fill: '#fff' });
+    starNumberText = game.add.text(16, 550, 'Star: 0/3', { font: '24px Arial', fill: '#fff' });
 
     // TuningGame texts
     submitButton = game.add.button(game.world.right - 170, 550,
         "submitButton", submitButtonOnClick, this, 2, 1, 0);
     metricsText = game.add.text(16, 16, "Metrics: none",
         {font: "24px Arial", fill: "#fff"});
+    metricsUpdateText = game.add.text(game.world.centerX - 130, height, "none",
+        {font: "24px Arial", fill: "#fff"});
+    metricsUpdateImage = game.add.button(game.world.centerX - 45, height, "rocket", null, this, 2, 1, 0);
     // Update with default parameters
     parameterX1Value = $("input#x1").text();
     parameterX2Value = $("input#x2").text();
@@ -173,15 +179,15 @@ function update() {
 
 
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer || jumpButton.isDown && player.body.touching.down && game.time.now > jumpTimer) {
-        player.body.velocity.y = -150;
-        //[-413, 100] -> [150, 500]
-
-        if (metricsValue > 0) {
-            console.log("Update velocity as: -1 * " + metricsValue)
-            // TODO: Control the height of jump with TuningGame metrics
-            player.body.velocity.y = -3 * metricsValue - 100 ;
+        // Veocity should be in [-500, -200]
+        if (metricsValue == "none" || metricsValue < 0) {
+            player.body.velocity.y = - 200;
+        } else if (metricsValue < 80) {
+            player.body.velocity.y = -1 * metricsValue - 200;
+        } else if (metricsValue < 90) {
+            player.body.velocity.y = -2 * metricsValue - 200;
         } else {
-            player.body.velocity.y = -100;
+            player.body.velocity.y = -3 * metricsValue - 200;
         }
 
         jumpTimer = game.time.now + 300;
@@ -202,7 +208,7 @@ function collectStar(player, star) {
     star.kill();
 
     starNumber += 1;
-    starNumberText.text = 'Star: ' + starNumber;
+    starNumberText.text = "Star: " + starNumber + "/3";
 
     // Display win text
     if(starNumber == 3) {
@@ -223,6 +229,8 @@ function submitButtonOnClick() {
         "participation_id": participationId,
         "parameters_instance": {"x1": parameterX1, "x2": parameterX2}
     }
+
+    metricsText.text = "Metrics: " + "executing...";
 
     // Request to create the trial
     $.ajax({
@@ -245,6 +253,22 @@ function submitButtonOnClick() {
 
                 metricsValue = data["data"]["metrics"];
                 metricsText.text = "Metrics: " + metricsValue;
+
+                metricsUpdateText.x = game.world.centerX - 130;
+                metricsUpdateText.y = height;
+                metricsUpdateText.text = "You get new metrics: " + metricsValue + "!";
+                metricsUpdateText.alpha = 0;
+
+                metricsUpdateImage.x = game.world.centerX - 45
+                metricsUpdateImage.y = height
+                metricsUpdateImage.alpha = 0;
+
+                // Display
+                game.add.tween(metricsUpdateText).to({y: 0}, 2000, Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateText).to({alpha: 1}, 2000, Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateImage).to({y: -180}, 2000, Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateImage).to({alpha: 1}, 2000, Phaser.Easing.Linear.None, true);
+
             });
 
         },
