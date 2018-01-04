@@ -22,12 +22,12 @@ def play(request):
 
     game_name = request.GET.get("game", "HighJump")
 
-    competition_name = "OneUnknowQuadraticEquation"
+    competition_name = "TwoUnknowQuadraticEquation"
     competition = Competition.objects.get(name=competition_name)
 
     participations = Participation.objects.filter(competition=competition)
 
-    username = "wawa"
+    username = "test"
     participation = Participation.objects.get(
         competition=competition, username=username)
 
@@ -41,7 +41,7 @@ def play(request):
         "trials": trials
     }
 
-    if game_name=="HighJump":
+    if game_name == "HighJump":
       template_file = "high_jump/index.html"
     else:
       template_file = "phaser_tutorial/index.html"

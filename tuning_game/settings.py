@@ -137,4 +137,6 @@ REGISTERED_COMPETITION = {
     "tuning.competition.one_unknow_quadratic_equation",
     "MnistKerasDnn":
     "tuning.competition.mnist_keras_dnn",
+    "TwoUnknowQuadraticEquation":
+    "tuning.competition.two_unknow_quadratic_equation",
 }

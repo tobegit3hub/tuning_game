@@ -81,7 +81,7 @@ class Command(BaseCommand):
         "name":
         "OneUnknowQuadraticEquation",
         "introduction":
-        "The uderlying game is the quadratic equation with on unknow variable which has the optimal value. It has only one parameter.",
+        "The uderlying game is the quadratic equation with one unknow variable which has the optimal value. It has only one parameter.",
         "parameters_description":
         '{"params":[{"parameterName": "x", "type": "DOUBLE"}]}',
         "goal":
@@ -135,6 +135,36 @@ class Command(BaseCommand):
         participation,
         "parameters_instance":
         'parameters = {"batch_size": 128, "hidden1_number": 512, "hidden2_number": 512}'
+    }
+    Trial.create_from_dict(trial_dict)
+
+    # TwoUnknowQuadraticEquation
+    competition_dict = {
+        "name":
+            "TwoUnknowQuadraticEquation",
+        "introduction":
+            "The uderlying game is the quadratic equation with two unknow variables which has the optimal value. It has two parameters.",
+        "parameters_description":
+            '{"params":[{"parameterName": "x1", "type": "DOUBLE"}, {"parameterName": "x2", "type": "DOUBLE"}]}',
+        "goal":
+            "MAXIMIZE",
+        "computation_budge":
+            100,
+        "theoretical_best_metrics":
+            100.0,
+    }
+    competition = Competition.create_from_dict(competition_dict)
+
+    participation_dict = {
+        "competition": competition,
+        "username": "test",
+        "email": "test@gmail.com"
+    }
+    participation = Participation.create_from_dict(participation_dict)
+
+    trial_dict = {
+        "participation": participation,
+        "parameters_instance": '{"x1": 1.0, "x2": 2.0}'
     }
     Trial.create_from_dict(trial_dict)
 

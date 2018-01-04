@@ -89,8 +89,11 @@ REGISTERED_COMPETITION = {
     "SquareFunction": "tuning.competition.square_function",
     "OneUnknowQuadraticEquation": "tuning.competition.one_unknow_quadratic_equation",
     "MnistKerasDnn": "tuning.competition.mnist_keras_dnn",
+    "TwoUnknowQuadraticEquation": "tuning.competition.two_unknow_quadratic_equation",
 }
 ```
+
+It would be better to add the new competition in [initialize_database.py](./tuning/management/commands/initialize_database.py).
 
 ## Deployment
 

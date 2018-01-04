@@ -12,7 +12,7 @@ var cursors;
 var jumpButton;
 var background;
 
-var metricsValue;
+var metricsValue = "none";
 var metricsText;
 var submitButton;
 var parameterX1Text;
@@ -24,11 +24,11 @@ var parameterX2Value;
 
 function preload() {
 
-    game.load.spritesheet('player', '/static/high_jump/images/jumper.png', 32, 48);
+    game.load.spritesheet('player', '/static/high_jump/images/player.png', 32, 48);
     game.load.image('background', '/static/high_jump/images/background.png');
     game.load.image("submitButton", "/static/high_jump/images/submit_button.png");
 
-    game.load.audio("bgm", "/static/games/audio/pokemon2.mp3");
+    game.load.audio("bgm", "/static/games/audio/pokemon.mp3");
 
 }
 
@@ -63,8 +63,6 @@ function create() {
         "submitButton", submitButtonOnClick, this, 2, 1, 0);
 
     music = game.sound.play("bgm");
-
-
 
 
     metricsText = game.add.text(16, 16, "Metrics: none",
@@ -132,16 +130,25 @@ function update() {
 
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
     {
-        player.body.velocity.y = -250;
+        player.body.velocity.y = -150;
+        //[-413, 100] -> [150, 500]
+
+        if (metricsValue > 0) {
+            console.log("Update velocity as: -1 * " + metricsValue)
+            player.body.velocity.y = -3 * metricsValue - 100 ;
+        } else {
+            player.body.velocity.y = -100;
+        }
+
+
+
         jumpTimer = game.time.now + 750;
     }
 
 }
 
 function render () {
-
-    game.debug.text(game.time.suggestedFps, 32, 32);
-
+    //game.debug.text(game.time.suggestedFps, 32, 32);
     // game.debug.text(game.time.physicsElapsed, 32, 32);
     // game.debug.body(player);
     // game.debug.bodyInfo(player, 16, 24);
@@ -154,10 +161,13 @@ function render () {
 function submitButtonOnClick() {
     console.log("Click submit button");
 
-    parameterValue = parseFloat(parameterX1Value);
+    parameterX1 = parseFloat(parameterX1Value);
+    parameterX2 = parseFloat(parameterX2Value);
+
     request_data = {
-        "participation_id": 69,
-        "parameters_instance": {"x": parameterValue}
+        // TODO: Get participation id
+        "participation_id": 75,
+        "parameters_instance": {"x1": parameterX1, "x2": parameterX2}
     }
 
     // Request to create the trial
@@ -179,8 +189,8 @@ function submitButtonOnClick() {
 
                 console.log("Succeed to execute the trial");
 
-                metrics = data["data"]["metrics"];
-                metricsText.text = "Metrics: " + metrics;
+                metricsValue = data["data"]["metrics"];
+                metricsText.text = "Metrics: " + metricsValue;
             });
 
         },
