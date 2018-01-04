@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <title>TuningGame</title>
+
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div align="center">
+        <h1>Choose The Game</h1>
+    </div>
+
+    <br/>
+
+    <div class="row">
+
+        <form action="/games/v1/play" method="get" onsubmit="return confirm('Do you want to play the game?');">
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputEmail3" name="username" value="test">
+                </div>
+            </div>
+
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Competition</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="competition" id="SquareFunction" value="SquareFunction">
+                            <label class="form-check-label" for="SquareFunction">
+                                Square Function
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="competition" id="MnistKerasDnn" value="MnistKerasDnn">
+                            <label class="form-check-label" for="MnistKerasDnn">
+                                MNIST Keras DNN
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="competition" id="OneUnknowQuadraticEquation" value="OneUnknowQuadraticEquation">
+                            <label class="form-check-label" for="OneUnknowQuadraticEquation">
+                                One Unknow Quadratic Equation
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="competition" id="TwoUnknowQuadraticEquation" value="TwoUnknowQuadraticEquation" checked>
+                            <label class="form-check-label" for="TwoUnknowQuadraticEquation">
+                                Two Unknow Quadratic Equation
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Game</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="game" id="HighJump" value="HighJump" checked>
+                            <label class="form-check-label" for="HighJump">
+                                <img src="/static/high_jump/images/high_jump_game.png" width="213" height="150">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Play</button>
+                </div>
+            </div>
+        </form>
+
+
+
+    </div> <!-- End of the div row -->
+
+</div> <!-- End of the container -->
+
+</body>
+
+</html>
