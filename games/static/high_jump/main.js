@@ -18,6 +18,7 @@ var starNumberText;
 var winText;
 
 // TuningGame variables
+var participationId = 1;
 var parameterX1Text;
 var parameterX1Value;
 var parameterX2Text;
@@ -95,10 +96,8 @@ function create() {
     // TuningGame texts
     submitButton = game.add.button(game.world.right - 170, 550,
         "submitButton", submitButtonOnClick, this, 2, 1, 0);
-
     metricsText = game.add.text(16, 16, "Metrics: none",
         {font: "24px Arial", fill: "#fff"});
-
     // Update with default parameters
     parameterX1Value = $("input#x1").text();
     parameterX2Value = $("input#x2").text();
@@ -106,6 +105,8 @@ function create() {
         {font: "24px Arial", fill: "#fff"});
     parameterX2Text = game.add.text(16, 112, "x2: " + parameterX2Text,
         {font: "24px Arial", fill: "#fff"});
+    participationId = $("p#participation_id").text();
+    console.log("participationId: " + participationId);
 
 
     // Win text
@@ -219,8 +220,7 @@ function submitButtonOnClick() {
     parameterX2 = parseFloat(parameterX2Value);
 
     request_data = {
-        // TODO: Get participation id
-        "participation_id": 75,
+        "participation_id": participationId,
         "parameters_instance": {"x1": parameterX1, "x2": parameterX2}
     }
 

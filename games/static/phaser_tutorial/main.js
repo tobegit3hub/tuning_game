@@ -121,7 +121,6 @@ var mainState = {
             winText.visible = true;
         }
 
-
         // For TuningGame
         inputParameterValue = $("input#parameter1").get(0).value;
         inputParameterTextWidget.text = "x: " + inputParameterValue;

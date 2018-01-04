@@ -95,6 +95,12 @@ REGISTERED_COMPETITION = {
 
 It would be better to add the new competition in [initialize_database.py](./tuning/management/commands/initialize_database.py).
 
+## Games
+
+Now you can play the actual **games** by tuning the parameters in the browser.
+
+![Games](./images/game_screenshot.png)
+
 ## Deployment
 
 Users can setup the TuningGame server and try in local environment easily.
