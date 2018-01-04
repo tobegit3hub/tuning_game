@@ -11,9 +11,24 @@ from tuning.models import Competition, Participation, Trial
 
 
 #  TODO: Setup the page to choose game and Partition
-def index(request):
+def index2(request):
   response = {"message": "Welcome to tuning game"}
   return JsonResponse(response)
+
+
+def index(request):
+
+  if request.method == "GET":
+
+    template_file = "choose_game.html"
+    return render(request, template_file)
+
+  else:
+    response = {
+        "error": True,
+        "message": "{} method not allowed".format(request.method)
+    }
+    return JsonResponse(response, status=405)
 
 
 def play(request):
@@ -21,13 +36,13 @@ def play(request):
   if request.method == "GET":
 
     game_name = request.GET.get("game", "HighJump")
+    competition_name = request.GET.get("competition",
+                                       "TwoUnknowQuadraticEquation")
+    username = request.GET.get("username", "test")
 
-    competition_name = "TwoUnknowQuadraticEquation"
     competition = Competition.objects.get(name=competition_name)
-
     participations = Participation.objects.filter(competition=competition)
 
-    username = "test"
     participation = Participation.objects.get(
         competition=competition, username=username)
 
@@ -41,6 +56,7 @@ def play(request):
         "trials": trials
     }
 
+    # TODO: Throw errors if choose the unfinished games
     if game_name == "HighJump":
       template_file = "high_jump/index.html"
     else:

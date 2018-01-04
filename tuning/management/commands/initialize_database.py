@@ -141,17 +141,17 @@ class Command(BaseCommand):
     # TwoUnknowQuadraticEquation
     competition_dict = {
         "name":
-            "TwoUnknowQuadraticEquation",
+        "TwoUnknowQuadraticEquation",
         "introduction":
-            "The uderlying game is the quadratic equation with two unknow variables which has the optimal value. It has two parameters.",
+        "The uderlying game is the quadratic equation with two unknow variables which has the optimal value. It has two parameters.",
         "parameters_description":
-            '{"params":[{"parameterName": "x1", "type": "DOUBLE"}, {"parameterName": "x2", "type": "DOUBLE"}]}',
+        '{"params":[{"parameterName": "x1", "type": "DOUBLE"}, {"parameterName": "x2", "type": "DOUBLE"}]}',
         "goal":
-            "MAXIMIZE",
+        "MAXIMIZE",
         "computation_budge":
-            100,
+        100,
         "theoretical_best_metrics":
-            100.0,
+        100.0,
     }
     competition = Competition.create_from_dict(competition_dict)
 

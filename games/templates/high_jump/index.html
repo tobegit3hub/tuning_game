@@ -19,8 +19,7 @@
 
     <div align="center">
         <h1>Tuning Game</h1>
-        <p>Competition: {{ competition.name }}</p>
-        <p>Player: {{ participation.username }}</p>
+        <p>Player: <b>{{ participation.username }}</b> &nbsp;&nbsp; Competition: <b>{{ competition.name }}</b></p>
     </div>
 
 
@@ -29,7 +28,14 @@
         <div id="game" class="col-md-9"></div>
 
         <div id="submit_form" class="col-md-3">
-            <h3>Parameters:</h3>
+            <h3>How to play</h3>
+            <p>
+                Player can adjust the values of the parameters below. Once submit the parameters, you can get the metrics. <b>The better metrics you get, the higher you can jump.</b> Now try <i>Submit</i> and press <i>Space</i> to jump and get the star.
+            </p>
+
+            <br/>
+
+            <h3>Parameters</h3>
 
             <form action="/dashboard/v1/trials" method="post"
                   onsubmit="return confirm('Do you want to create theresource?');">
