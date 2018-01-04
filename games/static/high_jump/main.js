@@ -1,8 +1,8 @@
-
 // Phaser variables
 var width = 800;
 var height = 600;
-var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',
+    {preload: preload, create: create, update: update, render: render});
 
 // Game variables
 var player;
@@ -29,12 +29,13 @@ var metricsUpdateText;
 var metricsUpdateImage;
 var submitButton;
 
-
 function preload() {
     // Load images
-    game.load.spritesheet('player', '/static/high_jump/images/player.png', 32, 48);
+    game.load.spritesheet('player', '/static/high_jump/images/player.png', 32,
+        48);
     game.load.image('background', '/static/high_jump/images/background.png');
-    game.load.image("submitButton", "/static/high_jump/images/submit_button.png");
+    game.load.image("submitButton",
+        "/static/high_jump/images/submit_button.png");
     game.load.image('star', '/static/high_jump/images/star.png');
     game.load.image('platform', '/static/high_jump/images/platform.png');
     game.load.image('rocket', '/static/high_jump/images/rocket.png');
@@ -43,8 +44,6 @@ function preload() {
     game.load.audio("bgm", "/static/games/audio/pokemon.mp3");
 
 }
-
-
 
 function create() {
 
@@ -94,7 +93,8 @@ function create() {
         star.body.bounce.x = 0.7 + Math.random() * 10.2;
     }
 
-    starNumberText = game.add.text(16, 550, 'Star: 0/3', { font: '24px Arial', fill: '#fff' });
+    starNumberText = game.add.text(16, 550, 'Star: 0/3',
+        {font: '24px Arial', fill: '#fff'});
 
     // TuningGame texts
     submitButton = game.add.button(game.world.right - 170, 550,
@@ -103,7 +103,8 @@ function create() {
         {font: "24px Arial", fill: "#fff"});
     metricsUpdateText = game.add.text(game.world.centerX - 130, height, "none",
         {font: "24px Arial", fill: "#fff"});
-    metricsUpdateImage = game.add.button(game.world.centerX - 45, height, "rocket", null, this, 2, 1, 0);
+    metricsUpdateImage = game.add.button(game.world.centerX - 45, height,
+        "rocket", null, this, 2, 1, 0);
     // Update with default parameters
     parameterX1Value = $("input#x1").text();
     parameterX2Value = $("input#x2").text();
@@ -113,7 +114,6 @@ function create() {
         {font: "24px Arial", fill: "#fff"});
     participationId = $("p#participation_id").text();
     console.log("participationId: " + participationId);
-
 
     // Win text
     winText = game.add.text(game.world.centerX - 50, game.world.centerY,
@@ -138,38 +138,30 @@ function update() {
     // Move the player
     player.body.velocity.x = 0;
 
-    if (cursors.left.isDown)
-    {
+    if (cursors.left.isDown) {
         player.body.velocity.x = -150;
 
-        if (facing != 'left')
-        {
+        if (facing != 'left') {
             player.animations.play('left');
             facing = 'left';
         }
     }
-    else if (cursors.right.isDown)
-    {
+    else if (cursors.right.isDown) {
         player.body.velocity.x = 150;
 
-        if (facing != 'right')
-        {
+        if (facing != 'right') {
             player.animations.play('right');
             facing = 'right';
         }
     }
-    else
-    {
-        if (facing != 'idle')
-        {
+    else {
+        if (facing != 'idle') {
             player.animations.stop();
 
-            if (facing == 'left')
-            {
+            if (facing == 'left') {
                 player.frame = 0;
             }
-            else
-            {
+            else {
                 player.frame = 5;
             }
 
@@ -177,11 +169,12 @@ function update() {
         }
     }
 
-
-    if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer || jumpButton.isDown && player.body.touching.down && game.time.now > jumpTimer) {
+    if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer
+        || jumpButton.isDown && player.body.touching.down && game.time.now
+        > jumpTimer) {
         // Veocity should be in [-500, -200]
         if (metricsValue == "none" || metricsValue < 0) {
-            player.body.velocity.y = - 200;
+            player.body.velocity.y = -200;
         } else if (metricsValue < 80) {
             player.body.velocity.y = -1 * metricsValue - 200;
         } else if (metricsValue < 90) {
@@ -195,7 +188,7 @@ function update() {
 
 }
 
-function render () {
+function render() {
     // game.debug.text(game.time.suggestedFps, 32, 32);
     // game.debug.text(game.time.physicsElapsed, 32, 32);
     // game.debug.body(player);
@@ -211,12 +204,11 @@ function collectStar(player, star) {
     starNumberText.text = "Star: " + starNumber + "/3";
 
     // Display win text
-    if(starNumber == 3) {
+    if (starNumber == 3) {
         winText.visible = true;
     }
 
 }
-
 
 // When user clicks the submit button
 function submitButtonOnClick() {
@@ -256,7 +248,8 @@ function submitButtonOnClick() {
 
                 metricsUpdateText.x = game.world.centerX - 130;
                 metricsUpdateText.y = height;
-                metricsUpdateText.text = "You get new metrics: " + metricsValue + "!";
+                metricsUpdateText.text = "You get new metrics: " + metricsValue
+                    + "!";
                 metricsUpdateText.alpha = 0;
 
                 metricsUpdateImage.x = game.world.centerX - 45
@@ -264,10 +257,14 @@ function submitButtonOnClick() {
                 metricsUpdateImage.alpha = 0;
 
                 // Display
-                game.add.tween(metricsUpdateText).to({y: 0}, 2000, Phaser.Easing.Linear.None, true);
-                game.add.tween(metricsUpdateText).to({alpha: 1}, 2000, Phaser.Easing.Linear.None, true);
-                game.add.tween(metricsUpdateImage).to({y: -180}, 2000, Phaser.Easing.Linear.None, true);
-                game.add.tween(metricsUpdateImage).to({alpha: 1}, 2000, Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateText).to({y: -32}, 2000,
+                    Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateText).to({alpha: 1}, 2000,
+                    Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateImage).to({y: -180}, 2000,
+                    Phaser.Easing.Linear.None, true);
+                game.add.tween(metricsUpdateImage).to({alpha: 1}, 2000,
+                    Phaser.Easing.Linear.None, true);
 
             });
 
