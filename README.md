@@ -80,6 +80,7 @@ There are battery-included competitions in TuningGame.
 * [SquareFunction](./tuning/competition/square_function.py)
 * [OneUnknowQuadraticEquation](./tuning/competition/one_unknow_quadratic_equation.py)
 * [MnistKerasDnn](./tuning/competition/mnist_keras_dnn.py)
+* [TwoUnknowQuadraticEquation](./tuning/competition/two_unknow_quadratic_equation.py)
 
 It is easy to extend and add your new competition. Please add the competition logic and test files in [competition](./tuning/competition/). Then add the information of package name and path in [settings.py](./settings.py).
 
@@ -97,7 +98,7 @@ It would be better to add the new competition in [initialize_database.py](./tuni
 
 ## Games
 
-Now you can play the actual **games** by tuning the parameters in the browser.
+Now you can play the actual **games** by tuning the parameters in the browser. Please go to <http://hypertune.cn:8000/games/> for more details.
 
 ![Games](./images/game_screenshot.png)
 
