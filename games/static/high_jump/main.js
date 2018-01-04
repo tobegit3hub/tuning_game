@@ -226,7 +226,7 @@ function submitButtonOnClick() {
 
     // Request to create the trial
     $.ajax({
-        url: 'http://127.0.0.1:8000/tuning/v1/trials',
+        url: '/tuning/v1/trials',
         dataType: 'json',
         type: 'post',
         contentType: 'application/json',
@@ -238,7 +238,7 @@ function submitButtonOnClick() {
             trial_id = data["data"]["id"];
 
             // Request to execute the trial
-            $.post("http://127.0.0.1:8000/tuning/v1/trials/" + trial_id
+            $.post("/tuning/v1/trials/" + trial_id
                 + "/execute", function (data, status) {
 
                 console.log("Succeed to execute the trial");
